@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ExternalLink, Github, Smartphone, Globe, Apple } from "lucide-react";
 import { PROJECTS } from "@/lib/data";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
@@ -26,8 +27,39 @@ function PlatformIcon({ platform }: { platform: Project["platform"] }) {
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const router = useRouter();
+  const isClickable = Boolean(project.detailUrl);
+
+  const handleCardClick = () => {
+    if (project.detailUrl) {
+      router.push(project.detailUrl);
+    }
+  };
+
+  const handleCardKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!project.detailUrl) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      router.push(project.detailUrl);
+    }
+  };
+
+  const handleInnerLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="glass rounded-2xl p-6 flex flex-col gap-4 hover:border-accent/20 transition-all group h-full">
+    <div
+      className={cn(
+        "glass rounded-2xl p-6 flex flex-col gap-4 hover:border-accent/20 transition-all group h-full",
+        isClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+      )}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      role={isClickable ? "link" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      aria-label={isClickable ? `${project.title} details` : undefined}
+    >
       {/* Top row */}
       <div className="flex items-start justify-between gap-3">
         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-accent2/20 border border-border flex items-center justify-center text-xl flex-shrink-0">
@@ -41,6 +73,7 @@ function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="text-muted hover:text-text transition-colors"
               aria-label="GitHub"
+              onClick={handleInnerLinkClick}
             >
               <Github size={16} />
             </a>
@@ -52,6 +85,7 @@ function ProjectCard({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="text-muted hover:text-accent transition-colors"
               aria-label="Live link"
+              onClick={handleInnerLinkClick}
             >
               <ExternalLink size={16} />
             </a>

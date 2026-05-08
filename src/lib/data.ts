@@ -91,6 +91,7 @@ export const PROJECTS: Project[] = [
     id: "proj-03",
     title: "StudyBuddy",
     description: "AI-powered study planner that generates personalised schedules, flashcards, and quizzes from your notes.",
+    detailUrl: "/projects/studybuddy",
     tags: ["Flutter", "OpenAI API", "Firebase", "Dart"],
     platform: "cross-platform",
     status: "in-progress",

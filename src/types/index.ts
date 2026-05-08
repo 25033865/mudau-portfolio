@@ -9,6 +9,7 @@ export interface Project {
   status: "live" | "in-progress" | "concept";
   year: number;
   imageUrl?: string;
+  detailUrl?: string;
   appStoreUrl?: string;
   playStoreUrl?: string;
   githubUrl?: string;
