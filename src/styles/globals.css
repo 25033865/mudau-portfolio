@@ -71,6 +71,98 @@ section[id] {
   color: var(--accent);
 }
 
+/* Custom Cursor */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .custom-cursor__ring,
+  .custom-cursor__dot {
+    position: fixed;
+    left: 0;
+    top: 0;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+    transition:
+      width 160ms ease,
+      height 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease,
+      box-shadow 160ms ease,
+      opacity 160ms ease;
+    will-change: transform, width, height, opacity;
+  }
+
+  .custom-cursor__ring.is-visible,
+  .custom-cursor__dot.is-visible {
+    opacity: 1;
+  }
+
+  .custom-cursor__ring {
+    width: 26px;
+    height: 26px;
+    border: 1px solid rgba(0, 229, 255, 0.68);
+    background: radial-gradient(circle, rgba(0, 229, 255, 0.1), transparent 62%);
+    box-shadow:
+      0 0 18px rgba(0, 229, 255, 0.22),
+      inset 0 0 18px rgba(123, 97, 255, 0.14);
+  }
+
+  .custom-cursor__dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.9);
+  }
+
+  .custom-cursor__ring[data-variant="hover"] {
+    width: 44px;
+    height: 44px;
+    border-color: rgba(0, 229, 255, 0.95);
+    background:
+      radial-gradient(circle, rgba(0, 229, 255, 0.18), transparent 58%),
+      radial-gradient(circle at 70% 30%, rgba(123, 97, 255, 0.22), transparent 54%);
+    box-shadow:
+      0 0 26px rgba(0, 229, 255, 0.34),
+      inset 0 0 24px rgba(123, 97, 255, 0.18);
+  }
+
+  .custom-cursor__dot[data-variant="hover"] {
+    width: 8px;
+    height: 8px;
+    background: var(--text);
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.95);
+  }
+
+  .custom-cursor__ring[data-variant="text"] {
+    width: 8px;
+    height: 34px;
+    border-color: rgba(0, 229, 255, 0.9);
+    background: rgba(0, 229, 255, 0.18);
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.38);
+  }
+
+  .custom-cursor__dot[data-variant="text"] {
+    opacity: 0;
+  }
+
+  .custom-cursor__ring[data-pressed="true"] {
+    width: 22px;
+    height: 22px;
+    background: rgba(0, 229, 255, 0.2);
+  }
+}
+
 /* ─── Typography ────────────────────────────────────────────────────────────── */
 .font-display { font-family: "Clash Display", sans-serif; }
 .font-body { font-family: "Satoshi", sans-serif; }

@@ -17,7 +17,7 @@ export default function Footer() {
         {/* Name & Credit */}
         <p className="font-body text-sm text-muted text-center md:text-left">
           © {year}{" "}
-          <span className="text-text font-medium">{PERSONAL_INFO.name}</span>
+          <span className="text-text font-medium">{PERSONAL_INFO.name}</span>. All rights reserved.
         </p>
 
         {/* Social Links */}

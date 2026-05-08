@@ -126,6 +126,20 @@ export default function HeroSection() {
               </span>
             </div>
 
+            {/* Mobile Profile Image */}
+            <div className="mx-auto mb-7 h-36 w-36 overflow-hidden rounded-full border border-border/70 bg-surface/60 shadow-[0_0_40px_rgba(0,229,255,0.12)] sm:h-44 sm:w-44 lg:hidden">
+              <div className="relative h-full w-full">
+                <Image
+                  src={PERSONAL_INFO.profileImage}
+                  alt={`${PERSONAL_INFO.firstName} ${PERSONAL_INFO.lastName}`}
+                  fill
+                  priority
+                  sizes="(min-width: 640px) 11rem, 9rem"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
             {/* Bio */}
             <p
               key={bioIndex}
@@ -203,14 +217,16 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll Hint */}
-      <button
-        onClick={scrollToAbout}
-        className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted transition-colors hover:text-accent sm:bottom-10 animate-float"
-        aria-label="Scroll down"
-      >
-        <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>
-        <ArrowDown size={16} />
-      </button>
+      <div className="pointer-events-none absolute inset-x-0 bottom-6 z-20 flex justify-center px-4 sm:bottom-10">
+        <button
+          onClick={scrollToAbout}
+          className="pointer-events-auto flex flex-col items-center gap-2 text-muted transition-colors hover:text-accent animate-float"
+          aria-label="Scroll down"
+        >
+          <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>
+          <ArrowDown size={16} />
+        </button>
+      </div>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { PERSONAL_INFO } from "@/lib/data";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 // ─── Page Metadata ────────────────────────────────────────────────────────────
 // ✏️  Edit the metadata to match your personal info and SEO keywords
@@ -33,7 +34,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="noise grid-bg">{children}</body>
+      <body className="noise grid-bg">
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }
