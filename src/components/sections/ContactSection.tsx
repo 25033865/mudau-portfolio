@@ -93,7 +93,7 @@ export default function ContactSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.platform}
-                    className="w-11 h-11 glass rounded-xl flex items-center justify-center text-muted hover:text-accent hover:border-accent/30 hover:shadow-[0_0_24px_rgba(0,229,255,0.35)] transition-all"
+                    className="w-12 h-12 glass rounded-xl flex items-center justify-center text-muted hover:text-accent hover:border-accent/30 hover:shadow-[0_0_24px_rgba(0,229,255,0.35)] transition-all"
                   >
                     {iconMap[social.icon] ?? social.platform[0]}
                   </a>
