@@ -69,8 +69,8 @@ export default function ContactSection() {
                 </div>
               </a>
 
-              <div className="flex items-center gap-4 p-4 sm:p-5 glass rounded-xl">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+              <div className="flex items-center gap-4 p-4 sm:p-5 glass rounded-xl hover:border-accent/30 transition-all group">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                   <MapPin size={18} className="text-accent" />
                 </div>
                 <div>

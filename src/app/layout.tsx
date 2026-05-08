@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="noise">{children}</body>
+      <body className="noise grid-bg">{children}</body>
     </html>
   );
 }
