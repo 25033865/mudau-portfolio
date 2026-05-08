@@ -83,7 +83,7 @@ function StudyCard({
   return (
     <div
       className={cn(
-        "rounded-lg border border-[#2a2a3a] bg-[#111118] p-5",
+        "min-w-0 overflow-hidden rounded-lg border border-[#2a2a3a] bg-[#111118] p-4 sm:p-5",
         className
       )}
     >
@@ -108,7 +108,7 @@ function PrimaryButton({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-lg bg-[#00e5ff] px-5 py-3 font-display text-sm font-bold text-black transition hover:-translate-y-0.5 hover:bg-[#33eaff] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0",
+        "inline-flex min-h-11 max-w-full items-center justify-center gap-2 rounded-lg bg-[#00e5ff] px-4 py-3 text-center font-display text-sm font-bold text-black transition hover:-translate-y-0.5 hover:bg-[#33eaff] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 sm:px-5",
         className
       )}
       {...props}
@@ -126,7 +126,7 @@ function GhostButton({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-lg border border-[#2a2a3a] px-4 py-2.5 text-sm text-[#f0f0ff] transition hover:border-[#00e5ff] hover:text-[#00e5ff] disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex min-h-11 max-w-full items-center justify-center gap-2 rounded-lg border border-[#2a2a3a] px-3.5 py-2.5 text-center text-sm text-[#f0f0ff] transition hover:border-[#00e5ff] hover:text-[#00e5ff] disabled:cursor-not-allowed disabled:opacity-50 sm:px-4",
         className
       )}
       {...props}
@@ -148,7 +148,7 @@ function EmptyState({
   onGenerate: () => void;
 }) {
   return (
-    <StudyCard className="px-6 py-14 text-center">
+    <StudyCard className="px-4 py-10 text-center sm:px-6 sm:py-14">
       <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-[#2a2a3a] bg-[#1a1a24] text-[#00e5ff]">
         <Icon size={24} />
       </div>
@@ -300,13 +300,13 @@ export default function StudyBuddyPage() {
   function renderHome() {
     return (
       <div className="animate-fade-in-up">
-        <section className="mb-8 border-b border-[#2a2a3a] py-9">
-          <h1 className="font-display text-4xl font-extrabold leading-tight tracking-normal text-[#f0f0ff] sm:text-5xl">
+        <section className="mb-6 border-b border-[#2a2a3a] py-7 sm:mb-8 sm:py-9">
+          <h1 className="font-display text-3xl font-extrabold leading-tight tracking-normal text-[#f0f0ff] sm:text-5xl">
             Study smarter,
             <br />
             not harder<span className="text-[#00e5ff]">.</span>
           </h1>
-          <p className="mt-4 max-w-xl text-[15px] leading-7 text-[#888899]">
+          <p className="mt-4 max-w-xl text-sm leading-7 text-[#888899] sm:text-[15px]">
             Paste notes and turn them into flashcards, quizzes, and a focused study plan.
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -394,11 +394,11 @@ export default function StudyBuddyPage() {
             placeholder="Paste your lecture notes, textbook excerpts, or study material here..."
             className="min-h-40 w-full resize-y rounded-lg border border-[#2a2a3a] bg-[#1a1a24] p-4 text-sm leading-7 text-[#f0f0ff] outline-none transition placeholder:text-[#888899] focus:border-[#00e5ff]"
           />
-          <div className="mt-4 flex flex-wrap gap-3">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <select
               value={subject}
               onChange={(event) => setSubject(event.target.value)}
-              className="min-w-36 flex-1 cursor-pointer rounded-lg border border-[#2a2a3a] bg-[#1a1a24] px-4 py-3 text-sm text-[#f0f0ff] outline-none focus:border-[#00e5ff]"
+              className="min-w-0 flex-1 cursor-pointer rounded-lg border border-[#2a2a3a] bg-[#1a1a24] px-4 py-3 text-sm text-[#f0f0ff] outline-none focus:border-[#00e5ff]"
             >
               {subjects.map((item) => (
                 <option key={item} value={item}>
@@ -406,7 +406,7 @@ export default function StudyBuddyPage() {
                 </option>
               ))}
             </select>
-            <PrimaryButton onClick={generateAll} disabled={isGenerating}>
+            <PrimaryButton className="w-full sm:w-auto" onClick={generateAll} disabled={isGenerating}>
               {isGenerating ? <Loader2 className="animate-spin" size={16} /> : <Sparkles size={16} />}
               Generate
             </PrimaryButton>
@@ -474,21 +474,21 @@ export default function StudyBuddyPage() {
         </div>
 
         <div className="group [perspective:1000px]">
-          <button className="relative min-h-52 w-full rounded-lg border border-[#2a2a3a] bg-[#111118] p-8 text-center transition duration-500 [transform-style:preserve-3d] group-focus-within:[transform:rotateY(180deg)] group-hover:[transform:rotateY(180deg)]">
-            <span className="absolute inset-0 flex items-center justify-center p-8 [backface-visibility:hidden]">
-              <span className="font-display text-lg font-bold leading-8">
+          <button className="relative min-h-52 w-full rounded-lg border border-[#2a2a3a] bg-[#111118] p-5 text-center transition duration-500 [transform-style:preserve-3d] group-focus-within:[transform:rotateY(180deg)] group-hover:[transform:rotateY(180deg)] sm:p-8">
+            <span className="absolute inset-0 flex items-center justify-center p-5 [backface-visibility:hidden] sm:p-8">
+              <span className="font-display text-base font-bold leading-7 sm:text-lg sm:leading-8">
                 {currentFlashcard.q}
               </span>
             </span>
-            <span className="absolute inset-0 flex items-center justify-center rounded-lg border border-[#00e5ff]/20 bg-[#00e5ff]/5 p-8 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-              <span className="font-display text-lg font-bold leading-8 text-[#00e5ff]">
+            <span className="absolute inset-0 flex items-center justify-center rounded-lg border border-[#00e5ff]/20 bg-[#00e5ff]/5 p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-8">
+              <span className="font-display text-base font-bold leading-7 text-[#00e5ff] sm:text-lg sm:leading-8">
                 {currentFlashcard.a}
               </span>
             </span>
           </button>
         </div>
 
-        <div className="mt-5 flex items-center justify-between gap-3">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
           <GhostButton onClick={previousCard}>
             <ChevronLeft size={16} />
             Prev
@@ -566,7 +566,7 @@ export default function StudyBuddyPage() {
         </div>
 
         <StudyCard>
-          <h2 className="mb-5 font-display text-xl font-bold leading-8">
+          <h2 className="mb-5 font-display text-lg font-bold leading-7 sm:text-xl sm:leading-8">
             {currentQuiz.q}
           </h2>
           <div className="grid gap-3">
@@ -601,7 +601,7 @@ export default function StudyBuddyPage() {
           </div>
         </StudyCard>
 
-        <div className="mt-4 flex items-center justify-between gap-3">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <span className="text-sm text-[#888899]">
             Score: <strong className="text-[#00e5ff]">{quizScore}</strong>
           </span>
@@ -641,7 +641,7 @@ export default function StudyBuddyPage() {
                   key={`${item.time}-${item.topic}`}
                   onClick={() => toggleScheduleItem(index)}
                   className={cn(
-                    "grid w-full grid-cols-[10px_64px_1fr] items-center gap-4 rounded-lg border border-[#2a2a3a] bg-[#1a1a24] p-3 text-left transition hover:border-[#00e5ff]/60",
+                    "grid w-full grid-cols-[10px_minmax(3.5rem,auto)_minmax(0,1fr)] items-center gap-3 rounded-lg border border-[#2a2a3a] bg-[#1a1a24] p-3 text-left transition hover:border-[#00e5ff]/60 sm:gap-4",
                     done && "opacity-70"
                   )}
                 >
@@ -654,10 +654,10 @@ export default function StudyBuddyPage() {
                   <span className="font-display text-xs font-bold text-[#00e5ff]">
                     {item.time}
                   </span>
-                  <span>
+                  <span className="min-w-0">
                     <span
                       className={cn(
-                        "block text-sm font-medium text-[#f0f0ff]",
+                        "block break-words text-sm font-medium text-[#f0f0ff]",
                         done && "text-[#888899] line-through"
                       )}
                     >
@@ -684,10 +684,10 @@ export default function StudyBuddyPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] px-5 py-0 text-[#f0f0ff]">
+    <main className="min-h-screen bg-[#0a0a0f] px-4 py-0 text-[#f0f0ff] sm:px-5 lg:px-6">
       <div className="mx-auto flex min-h-screen max-w-[900px] flex-col">
         <header className="mb-7 border-b border-[#2a2a3a] py-5">
-          <div className="mb-4 flex items-center justify-between gap-4">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
             <Link
               href="/#projects"
               className="inline-flex items-center gap-2 text-sm text-[#888899] transition hover:text-[#00e5ff]"
@@ -700,13 +700,13 @@ export default function StudyBuddyPage() {
             </div>
           </div>
 
-          <nav className="flex flex-wrap gap-1">
+          <nav className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
             {pages.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => showPage(id)}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm text-[#888899] transition hover:bg-[#1a1a24] hover:text-[#f0f0ff]",
+                  "inline-flex w-full items-center justify-center gap-2 rounded-lg px-3.5 py-2.5 text-sm text-[#888899] transition hover:bg-[#1a1a24] hover:text-[#f0f0ff] sm:w-auto sm:justify-start sm:py-2",
                   activePage === id && "bg-[#00e5ff]/10 font-medium text-[#00e5ff]"
                 )}
               >

@@ -16,7 +16,7 @@ export default function Button({
   children,
   ...props
 }: ButtonProps) {
-  const base = "inline-flex items-center justify-center gap-2 font-body font-medium rounded-xl transition-all";
+  const base = "inline-flex max-w-full items-center justify-center gap-2 rounded-xl font-body font-medium transition-all";
 
   const variants = {
     primary: "bg-accent text-bg hover:bg-accent/90 glow",

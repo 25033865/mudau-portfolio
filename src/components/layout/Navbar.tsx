@@ -17,8 +17,32 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
     };
+
+    const sections = ["hero", ...NAV_ITEMS.map((item) => item.href.replace("#", ""))]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target.id) {
+          setActiveSection(visible.target.id);
+        }
+      },
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0.1, 0.35, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleNavClick = (href: string) => {
@@ -33,10 +57,10 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
           ? "py-3 bg-bg/90 backdrop-blur-xl border-b border-border"
-          : "py-6 bg-transparent"
+          : "py-4 sm:py-6 bg-transparent"
       )}
     >
-      <nav className="w-full px-6 flex items-center justify-between">
+      <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo / Name */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -49,7 +73,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop Links */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-5 lg:gap-8">
           {NAV_ITEMS.map((item) => (
             <li key={item.href}>
               <button
@@ -77,9 +101,10 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-muted hover:text-text transition-colors"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-muted hover:text-text md:hidden transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -87,7 +112,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-surface border-b border-border px-6 py-6 flex flex-col gap-4">
+        <div className="absolute left-0 right-0 top-full flex max-h-[calc(100svh-72px)] flex-col gap-4 overflow-y-auto border-b border-border bg-surface/[0.98] px-4 py-5 shadow-2xl shadow-black/30 md:hidden">
           {NAV_ITEMS.map((item) => (
             <button
               key={item.href}

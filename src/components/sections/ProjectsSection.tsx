@@ -51,7 +51,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       className={cn(
-        "glass rounded-2xl p-6 flex flex-col gap-4 hover:border-accent/20 transition-all group h-full",
+        "glass flex h-full min-w-0 flex-col gap-4 rounded-2xl p-5 transition-all hover:border-accent/20 group sm:p-6",
         isClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       )}
       onClick={handleCardClick}
@@ -62,7 +62,7 @@ function ProjectCard({ project }: { project: Project }) {
     >
       {/* Top row */}
       <div className="flex items-start justify-between gap-3">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-accent2/20 border border-border flex items-center justify-center text-xl flex-shrink-0">
+        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 text-xl sm:h-12 sm:w-12">
           📱
         </div>
         <div className="flex gap-2">
@@ -108,7 +108,7 @@ function ProjectCard({ project }: { project: Project }) {
             {project.status === "in-progress" ? "In Progress" : project.status.charAt(0).toUpperCase() + project.status.slice(1)}
           </span>
         </div>
-        <div className="flex items-center gap-2 text-muted text-xs font-body">
+        <div className="flex flex-wrap items-center gap-2 font-body text-xs text-muted">
           <PlatformIcon platform={project.platform} />
           <span>{getPlatformLabel(project.platform)}</span>
           <span>·</span>
@@ -126,7 +126,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="text-xs font-mono text-accent/70 bg-accent/5 px-2 py-0.5 rounded-md"
+            className="max-w-full break-words rounded-md bg-accent/5 px-2 py-0.5 font-mono text-xs text-accent/70"
           >
             {tag}
           </span>
@@ -146,10 +146,10 @@ export default function ProjectsSection() {
   });
 
   return (
-    <section id="projects" className="py-28 px-6 relative">
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[600px] h-[300px] bg-accent2/4 rounded-full blur-[100px] pointer-events-none" />
+    <section id="projects" className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+      <div className="absolute left-1/2 top-0 h-[220px] w-[360px] -translate-x-1/2 rounded-full bg-accent2/4 blur-[100px] pointer-events-none sm:h-[300px] sm:w-[600px]" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeader
           label="Portfolio"
           title="Apps I've"
@@ -157,13 +157,13 @@ export default function ProjectsSection() {
         />
 
         {/* Filter Tabs */}
-        <div className="mt-12 flex flex-wrap gap-2 justify-center">
+        <div className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:flex sm:flex-wrap sm:justify-center">
           {FILTERS.map((f) => (
             <button
               key={f.value}
               onClick={() => setFilter(f.value)}
               className={cn(
-                "px-4 py-2 rounded-lg text-sm font-body transition-all",
+                "w-full rounded-lg px-3 py-2.5 font-body text-sm transition-all sm:w-auto sm:px-4 sm:py-2",
                 filter === f.value
                   ? "bg-accent text-bg font-semibold"
                   : "border border-border text-muted hover:text-text hover:border-accent/30"
@@ -182,7 +182,7 @@ export default function ProjectsSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
           {filtered.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

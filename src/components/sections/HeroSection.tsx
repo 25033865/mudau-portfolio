@@ -1,38 +1,35 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { ArrowDown, MapPin, Smartphone } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 // The first thing visitors see. Edit PERSONAL_INFO in /src/lib/data.ts
+const HERO_ROLES = ["App Developer", "Next.Js Developer", "React Native Developer"];
+const MAX_ROLE_LENGTH = Math.max(...HERO_ROLES.map((role) => role.length));
+const HERO_BIOS = [
+  "I'm a Mobile App Developer crafting high-performance. Specializing in React Native and cross-platform development, I turn concepts into polished, scalable mobile experiences that users love.",
+  "My journey in app development started in high school where curiosity sparked a passion for building. Today, with 2+ years of professional experience, I craft high-performance mobile applications.",
+];
+
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-  const roles = ["App Developer", "Next.Js Developer", "React Native Developer"];
-  const maxRoleLength = Math.max(...roles.map((role) => role.length));
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const bios = [
-    "I'm a Mobile App Developer crafting high-performance. Specializing in React Native and cross-platform development, I turn concepts into polished, scalable mobile experiences that users love.",
-    "My journey in app development started in high school where curiosity sparked a passion for building. Today, with 2+ years of professional experience, I craft high-performance mobile applications.",
-  ];
   const [bioIndex, setBioIndex] = useState(0);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
     const interval = setInterval(() => {
-      setBioIndex((prev) => (prev + 1) % bios.length);
+      setBioIndex((prev) => (prev + 1) % HERO_BIOS.length);
     }, 16000);
     return () => clearInterval(interval);
-  }, [bios.length]);
+  }, []);
 
   // Typewriter effect for rotating roles
   useEffect(() => {
-    const current = roles[roleIndex];
+    const current = HERO_ROLES[roleIndex];
 
     if (!isDeleting && displayText === current) {
       const pause = setTimeout(() => setIsDeleting(true), 1400);
@@ -42,7 +39,7 @@ export default function HeroSection() {
     if (isDeleting && displayText === "") {
       const pause = setTimeout(() => {
         setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % roles.length);
+        setRoleIndex((prev) => (prev + 1) % HERO_ROLES.length);
       }, 300);
       return () => clearTimeout(pause);
     }
@@ -53,7 +50,7 @@ export default function HeroSection() {
     }, isDeleting ? 50 : 90);
 
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex, roles.length]);
+  }, [displayText, isDeleting, roleIndex]);
 
   const scrollToAbout = () => {
     document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
@@ -84,7 +81,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center lg:items-start justify-center px-6 pt-24 sm:pt-28 lg:pt-32 grid-bg overflow-hidden"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden grid-bg px-4 pb-28 pt-24 sm:px-6 sm:pb-24 sm:pt-28 lg:items-start lg:px-8 lg:pt-32"
     >
       {/* Animated Blob Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -94,12 +91,12 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12">
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
+        <div className="flex flex-col items-center justify-between gap-10 lg:flex-row lg:items-start lg:gap-12 xl:gap-16">
           <div className="w-full lg:max-w-2xl text-center lg:text-left">
             {/* Availability Badge */}
             <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border glass mb-8 text-sm font-mono text-muted transition-colors hover:border-accent/60 hover:text-accent hover:bg-accent/10"
+              className="mb-7 inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-border px-3 py-2 text-center font-mono text-xs leading-relaxed text-muted glass transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-accent sm:mb-8 sm:px-4 sm:text-sm"
               style={{ animationDelay: "0.1s" }}
             >
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -107,19 +104,22 @@ export default function HeroSection() {
             </div>
 
             {/* Name */}
-            <h1 className="font-display font-bold leading-[1.05] mb-4">
-              <span className="block text-5xl sm:text-7xl md:text-8xl text-text">
+            <h1 className="mb-4 font-display font-bold leading-[1.05]">
+              <span className="block text-4xl min-[360px]:text-5xl sm:text-7xl md:text-8xl text-text">
                 {PERSONAL_INFO.firstName}
               </span>
-              <span className="block text-5xl sm:text-7xl md:text-8xl gradient-text glow-text">
+              <span className="block text-4xl min-[360px]:text-5xl sm:text-7xl md:text-8xl gradient-text glow-text">
                 {PERSONAL_INFO.lastName}
               </span>
             </h1>
 
             {/* Typewriter Role */}
-            <div className="h-10 flex items-center justify-center lg:justify-start mb-6">
-              <span className="font-mono text-xl sm:text-2xl text-accent">
-                <span className="inline-block" style={{ minWidth: `${maxRoleLength}ch` }}>
+            <div className="mb-6 flex h-9 max-w-full items-center justify-center overflow-hidden sm:h-10 lg:justify-start">
+              <span className="max-w-full font-mono text-base text-accent min-[360px]:text-lg sm:text-2xl">
+                <span
+                  className="inline-block max-w-full overflow-hidden whitespace-nowrap align-bottom text-left"
+                  style={{ width: `${MAX_ROLE_LENGTH}ch` }}
+                >
                   {displayText}
                 </span>
                 <span className="animate-pulse">|</span>
@@ -129,13 +129,13 @@ export default function HeroSection() {
             {/* Bio */}
             <p
               key={bioIndex}
-              className="font-body text-base sm:text-lg text-muted max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-10 animate-fade-in-up"
+              className="mx-auto mb-9 max-w-2xl animate-fade-in-up font-body text-sm leading-relaxed text-muted sm:mb-10 sm:text-lg lg:mx-0"
             >
-              {bios[bioIndex]}
+              {HERO_BIOS[bioIndex]}
             </p>
 
             {/* Stats Row */}
-            <div className="flex items-center justify-center lg:justify-start gap-8 sm:gap-16 mb-12">
+            <div className="mx-auto mb-10 grid w-full max-w-md grid-cols-3 items-start gap-3 sm:mb-12 sm:gap-8 lg:mx-0">
               {[
                 { value: `${PERSONAL_INFO.yearsOfExperience}+`, label: "Years Exp" },
                 { value: `${PERSONAL_INFO.projectsCompleted}+`, label: "Apps Built" },
@@ -143,12 +143,12 @@ export default function HeroSection() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="group text-center transition-colors hover:text-accent"
+                  className="group min-w-0 text-center transition-colors hover:text-accent"
                 >
-                  <div className="font-display font-bold text-3xl sm:text-4xl text-text group-hover:text-accent">
+                  <div className="font-display text-3xl font-bold text-text group-hover:text-accent sm:text-4xl">
                     {stat.value}
                   </div>
-                  <div className="font-body text-xs text-muted mt-1 uppercase tracking-widest group-hover:text-accent/80">
+                  <div className="mt-1 font-body text-[10px] uppercase tracking-[0.16em] text-muted group-hover:text-accent/80 sm:text-xs sm:tracking-widest">
                     {stat.label}
                   </div>
                 </div>
@@ -156,18 +156,18 @@ export default function HeroSection() {
             </div>
 
             {/* Location */}
-            <div className="flex items-center justify-center lg:justify-start gap-2 text-muted text-sm font-body mb-12">
+            <div className="mb-10 flex items-center justify-center gap-2 font-body text-sm text-muted sm:mb-12 lg:justify-start">
               <MapPin size={14} className="text-accent" />
               {PERSONAL_INFO.location}
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4 lg:justify-start">
               <button
                 onClick={() =>
                   document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="group flex items-center gap-2 px-7 py-3.5 bg-accent text-bg font-display font-semibold text-sm rounded-xl hover:bg-accent/90 transition-all glow"
+                className="group flex w-full max-w-xs items-center justify-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-display text-sm font-semibold text-bg glow transition-all hover:bg-accent/90 sm:w-auto"
               >
                 <Smartphone size={16} />
                 See My Work
@@ -176,7 +176,7 @@ export default function HeroSection() {
                 onClick={() =>
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="flex items-center gap-2 px-7 py-3.5 border border-border text-text font-body text-sm rounded-xl hover:border-accent/40 hover:text-accent transition-all"
+                className="flex w-full max-w-xs items-center justify-center gap-2 rounded-xl border border-border px-7 py-3.5 font-body text-sm text-text transition-all hover:border-accent/40 hover:text-accent sm:w-auto"
               >
                 Get In Touch
               </button>
@@ -184,15 +184,18 @@ export default function HeroSection() {
           </div>
 
           <div
-            className="hidden lg:block w-full max-w-lg h-[480px] tilt-card"
+            className="hidden h-[480px] w-full max-w-lg tilt-card lg:block"
             onMouseMove={handleTiltMove}
             onMouseLeave={handleTiltLeave}
           >
             <div className="tilt-card-inner rounded-3xl border border-border/60 bg-surface/50 overflow-hidden">
-              <img
+              <Image
                 src={PERSONAL_INFO.profileImage}
                 alt={`${PERSONAL_INFO.firstName} ${PERSONAL_INFO.lastName}`}
-                className="w-full h-full object-cover"
+                fill
+                priority
+                sizes="(min-width: 1024px) 32rem, 0px"
+                className="object-cover"
               />
             </div>
           </div>
@@ -202,7 +205,7 @@ export default function HeroSection() {
       {/* Scroll Hint */}
       <button
         onClick={scrollToAbout}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors animate-float"
+        className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted transition-colors hover:text-accent sm:bottom-10 animate-float"
         aria-label="Scroll down"
       >
         <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>

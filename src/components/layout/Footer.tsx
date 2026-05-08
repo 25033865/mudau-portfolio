@@ -12,8 +12,8 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-border py-10 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer className="border-t border-border px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 md:flex-row">
         {/* Name & Credit */}
         <p className="font-body text-sm text-muted text-center md:text-left">
           © {year}{" "}
@@ -21,7 +21,7 @@ export default function Footer() {
         </p>
 
         {/* Social Links */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           {CONTACT_INFO.socials.map((social) => (
             <a
               key={social.platform}
@@ -29,7 +29,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.platform}
-              className="text-muted hover:text-accent transition-colors"
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-muted transition-colors hover:text-accent"
             >
               {iconMap[social.icon] ?? social.platform}
             </a>

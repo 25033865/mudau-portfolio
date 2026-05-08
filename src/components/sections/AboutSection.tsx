@@ -31,21 +31,21 @@ const highlights = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-28 px-6 relative">
+    <section id="about" className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
       {/* Background accent */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-accent2/5 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute left-0 top-1/2 h-[240px] w-[240px] -translate-y-1/2 rounded-full bg-accent2/5 blur-[80px] pointer-events-none sm:h-[300px] sm:w-[300px]" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeader
           label="About Me"
           title="Turning ideas into"
           titleAccent="apps people use"
         />
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mt-16">
+        <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-16">
           {/* Left – Bio Text */}
-          <div className="space-y-6">
-            <p className="font-body text-muted leading-relaxed">
+          <div className="space-y-5 sm:space-y-6">
+            <p className="font-body text-sm leading-relaxed text-muted sm:text-base">
               Hey, I&apos;m{" "}
               <span className="text-text font-semibold">
                 {PERSONAL_INFO.firstName}
@@ -53,17 +53,17 @@ export default function AboutSection() {
               {" "}— an App Developer passionate about crafting mobile
               experiences that are intuitive, performant, and genuinely useful.
             </p>
-            <p className="font-body text-muted leading-relaxed">
+            <p className="font-body text-sm leading-relaxed text-muted sm:text-base">
               {PERSONAL_INFO.bio}
             </p>
-            <p className="font-body text-muted leading-relaxed">
+            <p className="font-body text-sm leading-relaxed text-muted sm:text-base">
               When I&apos;m not writing code, I&apos;m studying UI/UX patterns,
               exploring new frameworks, or mentoring other developers in the
               South African tech community.
             </p>
 
             {/* Quick Facts */}
-            <div className="pt-4 flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 pt-4 sm:gap-4">
               {[
                 ["📍", "South Africa"],
                 ["📱", "Flutter & React Native"],
@@ -72,7 +72,7 @@ export default function AboutSection() {
               ].map(([emoji, fact]) => (
                 <span
                   key={fact}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border text-sm font-body text-muted"
+                  className="inline-flex max-w-full items-center gap-2 rounded-lg border border-border px-3 py-1.5 font-body text-sm text-muted"
                 >
                   <span>{emoji}</span>
                   {fact}
@@ -82,11 +82,11 @@ export default function AboutSection() {
           </div>
 
           {/* Right – Highlight Cards */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             {highlights.map((item) => (
               <div
                 key={item.title}
-                className="glass rounded-2xl p-5 flex flex-col gap-3 hover:border-accent/30 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)] transition-all group"
+                className="glass flex flex-col gap-3 rounded-2xl p-4 transition-all hover:border-accent/30 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)] group sm:p-5"
               >
                 <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                   {item.icon}

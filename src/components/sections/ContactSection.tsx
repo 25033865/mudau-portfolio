@@ -36,7 +36,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-24 lg:py-28 px-4 sm:px-6 relative overflow-hidden">
+    <section id="contact" className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
       <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[360px] h-[200px] sm:w-[480px] sm:h-[240px] lg:w-[600px] lg:h-[300px] bg-accent2/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -60,22 +60,22 @@ export default function ContactSection() {
                 href={`mailto:${CONTACT_INFO.email}`}
                 className="flex items-center gap-4 p-4 sm:p-5 glass rounded-xl hover:border-accent/30 transition-all group"
               >
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-accent/10 transition-colors group-hover:bg-accent/20">
                   <Mail size={18} className="text-accent" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="font-body text-xs text-muted mb-0.5 uppercase tracking-wider">Email</p>
                   <p className="font-body text-text text-sm break-all sm:break-normal">{CONTACT_INFO.email}</p>
                 </div>
               </a>
 
               <div className="flex items-center gap-4 p-4 sm:p-5 glass rounded-xl hover:border-accent/30 transition-all group">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-accent/10 transition-colors group-hover:bg-accent/20">
                   <MapPin size={18} className="text-accent" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="font-body text-xs text-muted mb-0.5 uppercase tracking-wider">Location</p>
-                  <p className="font-body text-text text-sm">{CONTACT_INFO.location}</p>
+                  <p className="font-body text-sm text-text">{CONTACT_INFO.location}</p>
                 </div>
               </div>
             </div>

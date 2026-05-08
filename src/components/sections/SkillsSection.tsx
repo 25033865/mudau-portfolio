@@ -51,10 +51,10 @@ export default function SkillsSection() {
   const doubled = [...ALL_SKILLS_FLAT, ...ALL_SKILLS_FLAT];
 
   return (
-    <section id="skills" className="py-28 px-6 relative overflow-hidden">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-accent/4 rounded-full blur-[100px] pointer-events-none" />
+    <section id="skills" className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+      <div className="absolute right-0 top-1/2 h-[280px] w-[280px] -translate-y-1/2 rounded-full bg-accent/4 blur-[100px] pointer-events-none sm:h-[400px] sm:w-[400px]" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeader
           label="My Skills"
           title="Tools I build"
@@ -62,12 +62,12 @@ export default function SkillsSection() {
         />
 
         {/* Marquee Strip */}
-        <div className="mt-16 overflow-hidden -mx-6 px-0">
-          <div className="marquee-track gap-4">
+        <div className="-mx-4 mt-12 overflow-hidden px-0 sm:-mx-6 sm:mt-16">
+          <div className="marquee-track gap-2 sm:gap-4">
             {doubled.map((skill, i) => (
               <div
                 key={`${skill.name}-${i}`}
-                className="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border glass text-sm font-body text-muted mx-2"
+                className="mx-1 inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-border px-3 py-2 font-body text-xs text-muted glass sm:mx-2 sm:px-4 sm:text-sm"
               >
                 <span>{skill.icon}</span>
                 <span>{skill.name}</span>
@@ -77,11 +77,11 @@ export default function SkillsSection() {
         </div>
 
         {/* Categorised Grid */}
-        <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
           {CATEGORY_CONFIG.map((cat) => (
             <div
               key={cat.key}
-              className={`rounded-2xl border p-6 ${cat.color} ${cat.shadow} hover:scale-[1.02] transition-all`}
+              className={`rounded-2xl border p-5 sm:p-6 ${cat.color} ${cat.shadow} hover:scale-[1.02] transition-all`}
             >
               <h3 className="font-display font-semibold text-text text-base mb-4">
                 {cat.label}
@@ -90,7 +90,7 @@ export default function SkillsSection() {
                 {SKILLS[cat.key].map((skill) => (
                   <span
                     key={skill.name}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-body text-muted rounded-md bg-bg/60 border border-border/60"
+                    className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-border/60 bg-bg/60 px-2.5 py-1 font-body text-xs text-muted"
                   >
                     {skill.icon} {skill.name}
                   </span>
