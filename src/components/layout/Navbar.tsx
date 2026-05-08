@@ -36,7 +36,7 @@ export default function Navbar() {
           : "py-6 bg-transparent"
       )}
     >
-      <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <nav className="w-full px-6 flex items-center justify-between">
         {/* Logo / Name */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -68,14 +68,12 @@ export default function Navbar() {
         </ul>
 
         {/* CTA Button */}
-        <a
-          href={PERSONAL_INFO.resumeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => handleNavClick("#contact")}
           className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium font-body border border-accent/40 text-accent rounded-lg hover:bg-accent/10 transition-all"
         >
-          Download CV
-        </a>
+          Let&apos;s Talk
+        </button>
 
         {/* Mobile Menu Toggle */}
         <button
@@ -99,14 +97,12 @@ export default function Navbar() {
               {item.label}
             </button>
           ))}
-          <a
-            href={PERSONAL_INFO.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => handleNavClick("#contact")}
             className="mt-2 w-full text-center px-4 py-3 text-sm font-medium font-body border border-accent/40 text-accent rounded-lg hover:bg-accent/10 transition-all"
           >
-            Download CV
-          </a>
+            Let&apos;s Talk
+          </button>
         </div>
       )}
     </header>

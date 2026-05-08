@@ -45,7 +45,7 @@ export default function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center mt-16">
           {/* Left – Bio Text */}
           <div className="space-y-6">
-            <p className="font-body text-text/80 text-lg leading-relaxed">
+            <p className="font-body text-muted leading-relaxed">
               Hey, I&apos;m{" "}
               <span className="text-text font-semibold">
                 {PERSONAL_INFO.firstName}
@@ -86,7 +86,7 @@ export default function AboutSection() {
             {highlights.map((item) => (
               <div
                 key={item.title}
-                className="glass rounded-2xl p-5 flex flex-col gap-3 hover:border-accent/30 transition-all group"
+                className="glass rounded-2xl p-5 flex flex-col gap-3 hover:border-accent/30 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)] transition-all group"
               >
                 <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                   {item.icon}

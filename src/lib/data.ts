@@ -8,15 +8,15 @@ export const PERSONAL_INFO = {
   lastName: "Mudau",
   title: "App Developer",
   tagline: "Crafting mobile experiences that users love.",
-  bio: `I'm a passionate App Developer based in South Africa, specialising in building 
-        polished, high-performance mobile applications for iOS and Android. From concept 
+  bio: `I'm a passionate App Developer based in South Africa, specialising in building
+        polished, high-performance mobile applications for iOS and Android. From concept
         to deployment, I turn ideas into intuitive digital products that make a real impact.`,
   shortBio: "App Developer · South Africa · Building apps people love.",
-  yearsOfExperience: 3,
+  yearsOfExperience: 2,
   projectsCompleted: 12,
   location: "South Africa",
   availability: "Available for freelance & full-time opportunities",
-  profileImage: "/images/profile.jpg", // replace with your actual photo
+  profileImage: "https://firebasestorage.googleapis.com/v0/b/mudau-1d1cb.firebasestorage.app/o/musa.jpeg?alt=media&token=e25605e8-e9df-4990-836a-edd2f2f11ff8", // replace with your actual photo
   resumeUrl: "/resume.pdf",            // place your CV in /public/resume.pdf
 };
 
@@ -35,8 +35,6 @@ export const SKILLS = {
   mobile: [
     { name: "Flutter", icon: "📱" },
     { name: "React Native", icon: "⚛️" },
-    { name: "Dart", icon: "🎯" },
-    { name: "Swift (basics)", icon: "🍎" },
     { name: "Kotlin (basics)", icon: "🤖" },
   ],
   frontend: [
@@ -50,21 +48,17 @@ export const SKILLS = {
     { name: "Firebase", icon: "🔥" },
     { name: "Supabase", icon: "⚡" },
     { name: "Node.js", icon: "🟢" },
-    { name: "REST APIs", icon: "🔗" },
-    { name: "GraphQL", icon: "◈" },
   ],
   tools: [
     { name: "Git & GitHub", icon: "🐙" },
     { name: "VS Code", icon: "💻" },
     { name: "Android Studio", icon: "🤖" },
-    { name: "Xcode", icon: "🔨" },
-    { name: "Postman", icon: "📬" },
+    { name: "NetBeans", icon: "🧑‍💻" },
   ],
   design: [
     { name: "Figma", icon: "✏️" },
-    { name: "Adobe XD", icon: "🎨" },
+    { name: "DaisyUI", icon: "🌼" },
     { name: "UI/UX Design", icon: "🖼️" },
-    { name: "Prototyping", icon: "🔲" },
   ],
 };
 
@@ -170,14 +164,14 @@ export const EXPERIENCES: Experience[] = [
 // ─── Contact ──────────────────────────────────────────────────────────────────
 // ✏️  Update with your real contact info
 export const CONTACT_INFO: ContactInfo = {
-  email: "rotondwa@mudau.dev", // replace with your email
+  email: "mudaurotondwaagriment2007@gmail.com", // replace with your email
   location: "South Africa (Remote-Friendly)",
   availability: "Open to freelance projects & full-time roles",
   socials: [
     {
       platform: "GitHub",
-      url: "https://github.com/mudaurotondwa", // replace
-      handle: "@mudaurotondwa",
+      url: "https://github.com/25033865", // replace
+      handle: "@25033865",
       icon: "github",
     },
     {

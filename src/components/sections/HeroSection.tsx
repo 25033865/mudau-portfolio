@@ -8,14 +8,26 @@ import { PERSONAL_INFO, CONTACT_INFO } from "@/lib/data";
 // The first thing visitors see. Edit PERSONAL_INFO in /src/lib/data.ts
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  const roles = ["App Developer", "Flutter Expert", "React Native Expo"];
+  const roles = ["App Developer", "Next.Js Developer", "React Native Developer"];
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const bios = [
+    "I'm a Mobile App Developer crafting high-performance. Specializing in React Native and cross-platform development, I turn concepts into polished, scalable mobile experiences that users love.",
+    "My journey in app development started in high school where curiosity sparked a passion for building. Today, with 2+ years of professional experience, I craft high-performance mobile applications.",
+  ];
+  const [bioIndex, setBioIndex] = useState(0);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBioIndex((prev) => (prev + 1) % bios.length);
+    }, 16000);
+    return () => clearInterval(interval);
+  }, [bios.length]);
 
   // Typewriter effect for rotating roles
   useEffect(() => {
@@ -44,7 +56,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center lg:items-start justify-center px-6 grid-bg overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center lg:items-start justify-center px-6 pt-24 sm:pt-28 lg:pt-32 grid-bg overflow-hidden"
     >
       {/* Animated Blob Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -59,7 +71,7 @@ export default function HeroSection() {
           <div className="w-full lg:max-w-2xl text-center lg:text-left">
             {/* Availability Badge */}
             <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border glass mb-8 text-sm font-mono text-muted"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border glass mb-8 text-sm font-mono text-muted transition-colors hover:border-accent/60 hover:text-accent hover:bg-accent/10"
               style={{ animationDelay: "0.1s" }}
             >
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -85,10 +97,11 @@ export default function HeroSection() {
             </div>
 
             {/* Bio */}
-            <p className="font-body text-base sm:text-lg text-muted max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-10">
-              {PERSONAL_INFO.tagline}
-              {" "}I build cross-platform mobile apps that are fast, beautiful, and
-              loved by users — from concept to deployment.
+            <p
+              key={bioIndex}
+              className="font-body text-base sm:text-lg text-muted max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-10 animate-fade-in-up"
+            >
+              {bios[bioIndex]}
             </p>
 
             {/* Stats Row */}
@@ -98,11 +111,14 @@ export default function HeroSection() {
                 { value: `${PERSONAL_INFO.projectsCompleted}+`, label: "Apps Built" },
                 { value: "∞", label: "Ideas" },
               ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="font-display font-bold text-3xl sm:text-4xl text-text">
+                <div
+                  key={stat.label}
+                  className="group text-center transition-colors hover:text-accent"
+                >
+                  <div className="font-display font-bold text-3xl sm:text-4xl text-text group-hover:text-accent">
                     {stat.value}
                   </div>
-                  <div className="font-body text-xs text-muted mt-1 uppercase tracking-widest">
+                  <div className="font-body text-xs text-muted mt-1 uppercase tracking-widest group-hover:text-accent/80">
                     {stat.label}
                   </div>
                 </div>

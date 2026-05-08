@@ -15,11 +15,36 @@ const ALL_SKILLS_FLAT = [
 ];
 
 const CATEGORY_CONFIG = [
-  { key: "mobile" as const, label: "📱 Mobile", color: "border-accent/30 bg-accent/5" },
-  { key: "frontend" as const, label: "🌐 Frontend", color: "border-accent2/30 bg-accent2/5" },
-  { key: "backend" as const, label: "⚡ Backend & Cloud", color: "border-green-500/30 bg-green-500/5" },
-  { key: "tools" as const, label: "🔧 Tools & IDEs", color: "border-yellow-500/30 bg-yellow-500/5" },
-  { key: "design" as const, label: "✏️ Design", color: "border-pink-500/30 bg-pink-500/5" },
+  {
+    key: "mobile" as const,
+    label: "📱 Mobile",
+    color: "border-accent/30 bg-accent/5",
+    shadow: "hover:shadow-[0_0_35px_rgba(0,229,255,0.25)]",
+  },
+  {
+    key: "frontend" as const,
+    label: "🌐 Frontend",
+    color: "border-accent2/30 bg-accent2/5",
+    shadow: "hover:shadow-[0_0_35px_rgba(123,97,255,0.25)]",
+  },
+  {
+    key: "backend" as const,
+    label: "⚡ Backend & Cloud",
+    color: "border-green-500/30 bg-green-500/5",
+    shadow: "hover:shadow-[0_0_35px_rgba(34,197,94,0.25)]",
+  },
+  {
+    key: "tools" as const,
+    label: "🔧 Tools & IDEs",
+    color: "border-yellow-500/30 bg-yellow-500/5",
+    shadow: "hover:shadow-[0_0_35px_rgba(234,179,8,0.25)]",
+  },
+  {
+    key: "design" as const,
+    label: "✏️ Design",
+    color: "border-pink-500/30 bg-pink-500/5",
+    shadow: "hover:shadow-[0_0_35px_rgba(236,72,153,0.25)]",
+  },
 ];
 
 export default function SkillsSection() {
@@ -56,7 +81,7 @@ export default function SkillsSection() {
           {CATEGORY_CONFIG.map((cat) => (
             <div
               key={cat.key}
-              className={`rounded-2xl border p-6 ${cat.color} hover:scale-[1.02] transition-transform`}
+              className={`rounded-2xl border p-6 ${cat.color} ${cat.shadow} hover:scale-[1.02] transition-all`}
             >
               <h3 className="font-display font-semibold text-text text-base mb-4">
                 {cat.label}
