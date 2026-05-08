@@ -1,5 +1,5 @@
 import { PERSONAL_INFO, CONTACT_INFO } from "@/lib/data";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, MessageCircle } from "lucide-react";
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 export default function Footer() {
@@ -8,7 +8,7 @@ export default function Footer() {
   const iconMap: Record<string, React.ReactNode> = {
     github: <Github size={16} />,
     linkedin: <Linkedin size={16} />,
-    twitter: <Twitter size={16} />,
+    whatsapp: <MessageCircle size={16} />,
   };
 
   return (

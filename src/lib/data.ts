@@ -176,15 +176,15 @@ export const CONTACT_INFO: ContactInfo = {
     },
     {
       platform: "LinkedIn",
-      url: "https://linkedin.com/in/mudaurotondwa", // replace
+      url: "https://www.linkedin.com/in/mudau-rotondwa-agriment-924987383", // replace
       handle: "Rotondwa Mudau",
       icon: "linkedin",
     },
     {
-      platform: "Twitter / X",
-      url: "https://twitter.com/mudaurotondwa", // replace
-      handle: "@mudaurotondwa",
-      icon: "twitter",
+      platform: "WhatsApp",
+      url: "https://wa.me/27646243837", // replace
+      handle: "+27 64 624 3837",
+      icon: "whatsapp",
     },
   ],
 };

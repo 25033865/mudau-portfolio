@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Github, Linkedin, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { CONTACT_INFO, PERSONAL_INFO } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeader";
 
@@ -12,7 +12,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const iconMap: Record<string, React.ReactNode> = {
   github: <Github size={18} />,
   linkedin: <Linkedin size={18} />,
-  twitter: <Twitter size={18} />,
+  whatsapp: <MessageCircle size={18} />,
 };
 
 export default function ContactSection() {
