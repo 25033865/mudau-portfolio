@@ -134,3 +134,37 @@ body {
 .animate-fade-in-up {
   animation: fadeInUp 0.7s ease forwards;
 }
+
+/* ─── 3D Card Hover ────────────────────────────────────────────────────────── */
+.tilt-card {
+  perspective: 1200px;
+}
+
+.tilt-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  transform: rotateX(var(--tilt-rotate-x, 0deg)) rotateY(var(--tilt-rotate-y, 0deg)) translateZ(var(--tilt-translate-z, 0px));
+}
+
+.tilt-card-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.tilt-card:hover .tilt-card-inner {
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+  --tilt-translate-z: 40px;
+}
+
+.tilt-card:hover .tilt-card-inner::after {
+  opacity: 1;
+}

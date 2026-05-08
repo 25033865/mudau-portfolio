@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { ArrowDown, MapPin, Smartphone } from "lucide-react";
-import { PERSONAL_INFO, CONTACT_INFO } from "@/lib/data";
+import { PERSONAL_INFO } from "@/lib/data";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
 // The first thing visitors see. Edit PERSONAL_INFO in /src/lib/data.ts
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
   const roles = ["App Developer", "Next.Js Developer", "React Native Developer"];
+  const maxRoleLength = Math.max(...roles.map((role) => role.length));
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,25 +33,52 @@ export default function HeroSection() {
   // Typewriter effect for rotating roles
   useEffect(() => {
     const current = roles[roleIndex];
+
+    if (!isDeleting && displayText === current) {
+      const pause = setTimeout(() => setIsDeleting(true), 1400);
+      return () => clearTimeout(pause);
+    }
+
+    if (isDeleting && displayText === "") {
+      const pause = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+      }, 300);
+      return () => clearTimeout(pause);
+    }
+
     const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setDisplayText(current.slice(0, displayText.length + 1));
-        if (displayText === current) {
-          setTimeout(() => setIsDeleting(true), 1800);
-        }
-      } else {
-        setDisplayText(current.slice(0, displayText.length - 1));
-        if (displayText === "") {
-          setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
-        }
-      }
+      const nextLength = isDeleting ? displayText.length - 1 : displayText.length + 1;
+      setDisplayText(current.slice(0, nextLength));
     }, isDeleting ? 50 : 90);
+
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex]);
+  }, [displayText, isDeleting, roleIndex, roles.length]);
 
   const scrollToAbout = () => {
     document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleTiltMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const card = event.currentTarget;
+    const inner = card.querySelector(".tilt-card-inner") as HTMLDivElement | null;
+    if (!inner) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const rotateY = ((x / rect.width) * 2 - 1) * 26;
+    const rotateX = (1 - (y / rect.height) * 2) * 20;
+
+    inner.style.setProperty("--tilt-rotate-x", `${rotateX}deg`);
+    inner.style.setProperty("--tilt-rotate-y", `${rotateY}deg`);
+  };
+
+  const handleTiltLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    const inner = event.currentTarget.querySelector(".tilt-card-inner") as HTMLDivElement | null;
+    if (!inner) return;
+    inner.style.setProperty("--tilt-rotate-x", "0deg");
+    inner.style.setProperty("--tilt-rotate-y", "0deg");
   };
 
   return (
@@ -91,7 +119,9 @@ export default function HeroSection() {
             {/* Typewriter Role */}
             <div className="h-10 flex items-center justify-center lg:justify-start mb-6">
               <span className="font-mono text-xl sm:text-2xl text-accent">
-                {displayText}
+                <span className="inline-block" style={{ minWidth: `${maxRoleLength}ch` }}>
+                  {displayText}
+                </span>
                 <span className="animate-pulse">|</span>
               </span>
             </div>
@@ -153,8 +183,18 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="hidden lg:flex w-full max-w-md h-[420px] items-center justify-center rounded-3xl border border-border/60 bg-surface/50">
-            <span className="font-mono text-xs text-muted">Add photo</span>
+          <div
+            className="hidden lg:block w-full max-w-lg h-[480px] tilt-card"
+            onMouseMove={handleTiltMove}
+            onMouseLeave={handleTiltLeave}
+          >
+            <div className="tilt-card-inner rounded-3xl border border-border/60 bg-surface/50 overflow-hidden">
+              <img
+                src={PERSONAL_INFO.profileImage}
+                alt={`${PERSONAL_INFO.firstName} ${PERSONAL_INFO.lastName}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>

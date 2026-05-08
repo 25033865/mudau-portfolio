@@ -13,10 +13,10 @@ export const PERSONAL_INFO = {
         to deployment, I turn ideas into intuitive digital products that make a real impact.`,
   shortBio: "App Developer · South Africa · Building apps people love.",
   yearsOfExperience: 2,
-  projectsCompleted: 12,
+  projectsCompleted: 3,
   location: "South Africa",
   availability: "Available for freelance & full-time opportunities",
-  profileImage: "https://firebasestorage.googleapis.com/v0/b/mudau-1d1cb.firebasestorage.app/o/musa.jpeg?alt=media&token=e25605e8-e9df-4990-836a-edd2f2f11ff8", // replace with your actual photo
+  profileImage: "https://firebasestorage.googleapis.com/v0/b/mudau-1d1cb.firebasestorage.app/o/Mudau.PNG?alt=media&token=d4d82d50-4a87-4c9e-b81c-3e2c580901b1", // replace with your actual photo
   resumeUrl: "/resume.pdf",            // place your CV in /public/resume.pdf
 };
 
