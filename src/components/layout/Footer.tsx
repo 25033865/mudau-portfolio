@@ -18,7 +18,6 @@ export default function Footer() {
         <p className="font-body text-sm text-muted text-center md:text-left">
           © {year}{" "}
           <span className="text-text font-medium">{PERSONAL_INFO.name}</span>
-          {" · "}Built with Next.js &amp; TypeScript
         </p>
 
         {/* Social Links */}
