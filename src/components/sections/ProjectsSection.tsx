@@ -7,6 +7,7 @@ import { PROJECTS } from "@/lib/data";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
 import type { Project } from "@/types";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Projects Section ─────────────────────────────────────────────────────────
 // Edit, add or remove projects in PROJECTS inside /src/lib/data.ts
@@ -157,7 +158,7 @@ export default function ProjectsSection() {
         />
 
         {/* Filter Tabs */}
-        <div className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:flex sm:flex-wrap sm:justify-center">
+        <ScrollReveal className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:flex sm:flex-wrap sm:justify-center">
           {FILTERS.map((f) => (
             <button
               key={f.value}
@@ -179,12 +180,18 @@ export default function ProjectsSection() {
               </span>
             </button>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Projects Grid */}
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {filtered.map((project, index) => (
+            <ScrollReveal
+              key={project.id}
+              className="h-full"
+              delay={index * 0.06}
+            >
+              <ProjectCard project={project} />
+            </ScrollReveal>
           ))}
         </div>
 

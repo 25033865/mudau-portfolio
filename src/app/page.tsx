@@ -12,7 +12,7 @@ import ContactSection from "@/components/sections/ContactSection";
 // Each section is a separate component — easy to edit individually.
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-bg grid-bg">
+    <main className="page-shell-enter relative min-h-screen bg-bg grid-bg">
       <Navbar />
       <HeroSection />
       <AboutSection />

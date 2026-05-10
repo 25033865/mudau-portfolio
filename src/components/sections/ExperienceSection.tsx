@@ -4,6 +4,7 @@ import { Briefcase, Calendar } from "lucide-react";
 import { EXPERIENCES } from "@/lib/data";
 import { formatDateRange } from "@/lib/utils";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Experience Section ───────────────────────────────────────────────────────
 // Edit experiences in EXPERIENCES inside /src/lib/data.ts
@@ -25,8 +26,12 @@ export default function ExperienceSection() {
           <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-accent/40 via-border to-transparent hidden sm:block" />
 
           <div className="flex flex-col gap-6 sm:gap-10">
-            {EXPERIENCES.map((exp) => (
-              <div key={exp.id} className="relative sm:pl-20">
+            {EXPERIENCES.map((exp, index) => (
+              <ScrollReveal
+                key={exp.id}
+                className="relative sm:pl-20"
+                delay={index * 0.08}
+              >
                 {/* Timeline Dot */}
                 <div className="absolute left-0 top-5 hidden sm:flex w-12 h-12 rounded-full bg-surface border border-border items-center justify-center">
                   <Briefcase size={16} className="text-accent" />
@@ -78,7 +83,7 @@ export default function ExperienceSection() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

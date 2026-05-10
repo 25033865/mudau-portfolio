@@ -2,6 +2,7 @@
 
 import { SKILLS } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Skills Section ───────────────────────────────────────────────────────────
 // Edit skills in SKILLS inside /src/lib/data.ts — add, remove or rename them.
@@ -62,7 +63,7 @@ export default function SkillsSection() {
         />
 
         {/* Marquee Strip */}
-        <div className="-mx-4 mt-12 overflow-hidden px-0 sm:-mx-6 sm:mt-16">
+        <ScrollReveal className="-mx-4 mt-12 overflow-hidden px-0 sm:-mx-6 sm:mt-16">
           <div className="marquee-track gap-2 sm:gap-4">
             {doubled.map((skill, i) => (
               <div
@@ -74,29 +75,32 @@ export default function SkillsSection() {
               </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Categorised Grid */}
         <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
-          {CATEGORY_CONFIG.map((cat) => (
-            <div
+          {CATEGORY_CONFIG.map((cat, index) => (
+            <ScrollReveal
               key={cat.key}
-              className={`rounded-2xl border p-5 sm:p-6 ${cat.color} ${cat.shadow} hover:scale-[1.02] transition-all`}
+              className="h-full"
+              delay={index * 0.06}
             >
-              <h3 className="font-display font-semibold text-text text-base mb-4">
-                {cat.label}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {SKILLS[cat.key].map((skill) => (
-                  <span
-                    key={skill.name}
-                    className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-border/60 bg-bg/60 px-2.5 py-1 font-body text-xs text-muted"
-                  >
-                    {skill.icon} {skill.name}
-                  </span>
-                ))}
+              <div className={`h-full rounded-2xl border p-5 sm:p-6 ${cat.color} ${cat.shadow} hover:scale-[1.02] transition-all`}>
+                <h3 className="font-display font-semibold text-text text-base mb-4">
+                  {cat.label}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {SKILLS[cat.key].map((skill) => (
+                    <span
+                      key={skill.name}
+                      className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-border/60 bg-bg/60 px-2.5 py-1 font-body text-xs text-muted"
+                    >
+                      {skill.icon} {skill.name}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

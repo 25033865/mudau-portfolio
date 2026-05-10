@@ -3,6 +3,7 @@
 import { Smartphone, Code2, Layers, Zap } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── About Section ────────────────────────────────────────────────────────────
 // Edit bio in PERSONAL_INFO inside /src/lib/data.ts
@@ -44,7 +45,7 @@ export default function AboutSection() {
 
         <div className="mt-12 grid items-center gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-16">
           {/* Left – Bio Text */}
-          <div className="space-y-5 sm:space-y-6">
+          <ScrollReveal className="space-y-5 sm:space-y-6">
             <p className="font-body text-sm leading-relaxed text-muted sm:text-base">
               Hey, I&apos;m{" "}
               <span className="text-text font-semibold">
@@ -79,25 +80,28 @@ export default function AboutSection() {
                 </span>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right – Highlight Cards */}
           <div className="grid gap-4 sm:grid-cols-2">
-            {highlights.map((item) => (
-              <div
+            {highlights.map((item, index) => (
+              <ScrollReveal
                 key={item.title}
-                className="glass flex flex-col gap-3 rounded-2xl p-4 transition-all hover:border-accent/30 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)] group sm:p-5"
+                className="h-full"
+                delay={index * 0.07}
               >
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                  {item.icon}
+                <div className="glass flex h-full flex-col gap-3 rounded-2xl p-4 transition-all hover:border-accent/30 hover:shadow-[0_0_30px_rgba(0,229,255,0.25)] group sm:p-5">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                    {item.icon}
+                  </div>
+                  <h3 className="font-display font-semibold text-text text-sm">
+                    {item.title}
+                  </h3>
+                  <p className="font-body text-muted text-xs leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
-                <h3 className="font-display font-semibold text-text text-sm">
-                  {item.title}
-                </h3>
-                <p className="font-body text-muted text-xs leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

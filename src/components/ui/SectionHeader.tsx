@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
 // ─── Section Header ───────────────────────────────────────────────────────────
 // Reusable heading block used at the top of every section.
 // Usage: <SectionHeader label="About Me" title="My" titleAccent="story" />
@@ -15,8 +19,16 @@ export default function SectionHeader({
   titleAccent,
   centered = true,
 }: SectionHeaderProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <div className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <motion.div
+      className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 22 }}
+      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.55 }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+    >
       {/* Label */}
       <span className="inline-block max-w-full break-words font-mono text-[11px] sm:text-xs text-accent uppercase tracking-[0.18em] sm:tracking-[0.2em] mb-4 px-3 py-1 rounded-full border border-accent/20 bg-accent/5">
         {label}
@@ -27,6 +39,6 @@ export default function SectionHeader({
         {title}{" "}
         <span className="gradient-text">{titleAccent}</span>
       </h2>
-    </div>
+    </motion.div>
   );
 }

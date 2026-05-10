@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Mail, MapPin, Github, Linkedin, MessageCircle, Send, CheckCircle } from "lucide-react";
 import { CONTACT_INFO, PERSONAL_INFO } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeader";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Contact Section ──────────────────────────────────────────────────────────
 // Edit contact details in CONTACT_INFO inside /src/lib/data.ts
@@ -48,7 +49,7 @@ export default function ContactSection() {
 
         <div className="mt-12 sm:mt-16 grid gap-10 lg:gap-12 lg:grid-cols-2 items-start">
           {/* Left – Info */}
-          <div className="space-y-8">
+          <ScrollReveal className="space-y-8">
             <p className="font-body text-muted text-base sm:text-lg leading-relaxed">
               Have an app idea? Want to collaborate? Or just want to say hi?
               I&apos;d love to hear from you. I typically reply within 24 hours.
@@ -100,10 +101,10 @@ export default function ContactSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right – Contact Form */}
-          <div className="glass rounded-2xl p-6 sm:p-8">
+          <ScrollReveal className="glass rounded-2xl p-6 sm:p-8" delay={0.1}>
             <h3 className="font-display font-bold text-text text-xl mb-6">
               Send a Message
             </h3>
@@ -175,7 +176,7 @@ export default function ContactSection() {
                 )}
               </button>
             </form>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

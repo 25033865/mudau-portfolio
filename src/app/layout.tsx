@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { PERSONAL_INFO } from "@/lib/data";
 import CustomCursor from "@/components/ui/CustomCursor";
+import PageIntro from "@/components/ui/PageIntro";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 // ─── Page Metadata ────────────────────────────────────────────────────────────
 // ✏️  Edit the metadata to match your personal info and SEO keywords
@@ -35,6 +37,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="noise grid-bg">
+        <PageIntro />
+        <ScrollProgress />
         <CustomCursor />
         {children}
       </body>
