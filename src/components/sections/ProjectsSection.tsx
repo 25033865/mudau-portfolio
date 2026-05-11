@@ -20,11 +20,19 @@ const FILTERS: { label: string; value: FilterType }[] = [
   { label: "In Progress", value: "in-progress" },
 ];
 
-function PlatformIcon({ platform }: { platform: Project["platform"] }) {
-  if (platform === "ios") return <Apple size={14} />;
-  if (platform === "android") return <Smartphone size={14} />;
-  if (platform === "web") return <Globe size={14} />;
-  return <Smartphone size={14} />;
+function PlatformIcon({
+  platform,
+  size = 14,
+  className,
+}: {
+  platform: Project["platform"];
+  size?: number;
+  className?: string;
+}) {
+  if (platform === "ios") return <Apple size={size} className={className} />;
+  if (platform === "android") return <Smartphone size={size} className={className} />;
+  if (platform === "web") return <Globe size={size} className={className} />;
+  return <Smartphone size={size} className={className} />;
 }
 
 function ProjectCard({ project }: { project: Project }) {
@@ -63,8 +71,8 @@ function ProjectCard({ project }: { project: Project }) {
     >
       {/* Top row */}
       <div className="flex items-start justify-between gap-3">
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 text-xl sm:h-12 sm:w-12">
-          📱
+        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 sm:h-12 sm:w-12">
+          <PlatformIcon platform={project.platform} size={22} className="text-accent" />
         </div>
         <div className="flex gap-2">
           {project.githubUrl && (

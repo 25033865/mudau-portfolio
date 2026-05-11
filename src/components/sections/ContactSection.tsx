@@ -26,7 +26,7 @@ export default function ContactSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // ✏️  Replace this with your preferred email handler (EmailJS, Resend, Formspree, etc.)
+  // Replace this with your preferred email handler (EmailJS, Resend, Formspree, etc.).
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const subject = encodeURIComponent(`Portfolio Inquiry from ${form.name}`);

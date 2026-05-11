@@ -6,7 +6,7 @@ import PageIntro from "@/components/ui/PageIntro";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 
 // ─── Page Metadata ────────────────────────────────────────────────────────────
-// ✏️  Edit the metadata to match your personal info and SEO keywords
+// Edit the metadata to match your personal info and SEO keywords.
 export const metadata: Metadata = {
   title: `${PERSONAL_INFO.name} — ${PERSONAL_INFO.title}`,
   description: `${PERSONAL_INFO.shortBio} ${PERSONAL_INFO.tagline}`,

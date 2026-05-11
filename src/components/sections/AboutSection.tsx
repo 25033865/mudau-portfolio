@@ -1,6 +1,14 @@
 "use client";
 
-import { Smartphone, Code2, Layers, Zap } from "lucide-react";
+import {
+  CheckCircle,
+  Code2,
+  Layers,
+  MapPin,
+  Smartphone,
+  Target,
+  Zap,
+} from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -28,6 +36,13 @@ const highlights = [
     title: "Performance",
     desc: "Optimising startup time, frame rates, and bundle size is part of my process.",
   },
+];
+
+const quickFacts = [
+  { icon: MapPin, fact: "South Africa" },
+  { icon: Smartphone, fact: "Flutter & React Native" },
+  { icon: Target, fact: "Mobile-First" },
+  { icon: CheckCircle, fact: "Available Now" },
 ];
 
 export default function AboutSection() {
@@ -65,17 +80,12 @@ export default function AboutSection() {
 
             {/* Quick Facts */}
             <div className="flex flex-wrap gap-3 pt-4 sm:gap-4">
-              {[
-                ["📍", "South Africa"],
-                ["📱", "Flutter & React Native"],
-                ["🎯", "Mobile-First"],
-                ["✅", "Available Now"],
-              ].map(([emoji, fact]) => (
+              {quickFacts.map(({ icon: Icon, fact }) => (
                 <span
                   key={fact}
                   className="inline-flex max-w-full items-center gap-2 rounded-lg border border-border px-3 py-1.5 font-body text-sm text-muted"
                 >
-                  <span>{emoji}</span>
+                  <Icon aria-hidden="true" size={14} className="flex-shrink-0 text-accent" />
                   {fact}
                 </span>
               ))}

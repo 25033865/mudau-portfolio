@@ -1,7 +1,7 @@
 import type { Project, Experience, ContactInfo, NavItem } from "@/types";
 
 // ─── Personal Info ────────────────────────────────────────────────────────────
-// ✏️  Edit your personal details here
+// Edit your personal details here.
 export const PERSONAL_INFO = {
   name: "Mudau Rotondwa Agriment",
   firstName: "Rotondwa",
@@ -30,40 +30,40 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 // ─── Skills ───────────────────────────────────────────────────────────────────
-// ✏️  Add / remove skills as needed
+// Add / remove skills as needed.
 export const SKILLS = {
   mobile: [
-    { name: "Flutter", icon: "📱" },
-    { name: "React Native", icon: "⚛️" },
-    { name: "Kotlin (basics)", icon: "🤖" },
+    { name: "Flutter", icon: "flutter" },
+    { name: "React Native", icon: "react" },
+    { name: "Kotlin (basics)", icon: "kotlin" },
   ],
   frontend: [
-    { name: "React.js", icon: "⚛️" },
-    { name: "Next.js", icon: "▲" },
-    { name: "TypeScript", icon: "🔷" },
-    { name: "Tailwind CSS", icon: "🎨" },
-    { name: "HTML5 / CSS3", icon: "🌐" },
+    { name: "React.js", icon: "react" },
+    { name: "Next.js", icon: "nextjs" },
+    { name: "TypeScript", icon: "typescript" },
+    { name: "Tailwind CSS", icon: "tailwindcss" },
+    { name: "HTML5 / CSS3", icon: "html5" },
   ],
   backend: [
-    { name: "Firebase", icon: "🔥" },
-    { name: "Supabase", icon: "⚡" },
-    { name: "Node.js", icon: "🟢" },
+    { name: "Firebase", icon: "firebase" },
+    { name: "Supabase", icon: "supabase" },
+    { name: "Node.js", icon: "nodejs" },
   ],
   tools: [
-    { name: "Git & GitHub", icon: "🐙" },
-    { name: "VS Code", icon: "💻" },
-    { name: "Android Studio", icon: "🤖" },
-    { name: "NetBeans", icon: "🧑‍💻" },
+    { name: "Git & GitHub", icon: "git" },
+    { name: "VS Code", icon: "vscode" },
+    { name: "Android Studio", icon: "androidstudio" },
+    { name: "NetBeans", icon: "netbeans" },
   ],
   design: [
-    { name: "Figma", icon: "✏️" },
-    { name: "DaisyUI", icon: "🌼" },
-    { name: "UI/UX Design", icon: "🖼️" },
+    { name: "Figma", icon: "figma" },
+    { name: "DaisyUI", icon: "daisyui" },
+    { name: "UI/UX Design", icon: "uiux" },
   ],
 };
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
-// ✏️  Replace these with your real projects
+// Replace these with your real projects.
 export const PROJECTS: Project[] = [
   {
     id: "proj-01",
@@ -131,7 +131,7 @@ export const PROJECTS: Project[] = [
 ];
 
 // ─── Experience ───────────────────────────────────────────────────────────────
-// ✏️  Replace with your real work history
+// Replace with your real work history.
 export const EXPERIENCES: Experience[] = [
   {
     id: "exp-01",
@@ -163,7 +163,7 @@ export const EXPERIENCES: Experience[] = [
 ];
 
 // ─── Contact ──────────────────────────────────────────────────────────────────
-// ✏️  Update with your real contact info
+// Update with your real contact info.
 export const CONTACT_INFO: ContactInfo = {
   email: "mudaurotondwaagriment2007@gmail.com", // replace with your email
   location: "South Africa (Remote-Friendly)",
