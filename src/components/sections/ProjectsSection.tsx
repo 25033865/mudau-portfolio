@@ -161,8 +161,8 @@ export default function ProjectsSection() {
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeader
           label="Portfolio"
-          title="Apps I've"
-          titleAccent="shipped"
+          title="Show"
+          titleAccent="OFS"
         />
 
         {/* Filter Tabs */}
