@@ -190,7 +190,7 @@ export default function HeroSection() {
                 onClick={() =>
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="flex w-full max-w-xs items-center justify-center gap-2 rounded-xl border border-border px-7 py-3.5 font-body text-sm text-text transition-all hover:border-accent/40 hover:text-accent sm:w-auto"
+                className="flex w-full max-w-xs items-center justify-center gap-2 rounded-xl border border-border bg-surface/80 px-7 py-3.5 font-body text-sm text-text shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-all hover:border-accent/40 hover:bg-surface hover:text-accent sm:w-auto"
               >
                 Get In Touch
               </button>
