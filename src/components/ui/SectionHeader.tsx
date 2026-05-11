@@ -20,6 +20,8 @@ export default function SectionHeader({
   centered = true,
 }: SectionHeaderProps) {
   const prefersReducedMotion = useReducedMotion();
+  const hasTitle = title.trim().length > 0;
+  const hasAccent = titleAccent.trim().length > 0;
 
   return (
     <motion.div
@@ -36,8 +38,9 @@ export default function SectionHeader({
 
       {/* Heading */}
       <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-text leading-tight [text-wrap:balance]">
-        {title}{" "}
-        <span className="gradient-text">{titleAccent}</span>
+        {hasTitle && title}
+        {hasTitle && hasAccent && " "}
+        {hasAccent && <span className="gradient-text">{titleAccent}</span>}
       </h2>
     </motion.div>
   );

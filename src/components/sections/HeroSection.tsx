@@ -179,7 +179,7 @@ export default function HeroSection() {
             <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:gap-4 lg:justify-start">
               <button
                 onClick={() =>
-                  document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })
+                  document.querySelector("#show-ofs")?.scrollIntoView({ behavior: "smooth" })
                 }
                 className="group flex w-full max-w-xs items-center justify-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-display text-sm font-semibold text-bg glow transition-all hover:bg-accent/90 sm:w-auto"
               >
