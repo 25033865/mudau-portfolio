@@ -166,6 +166,7 @@ export const EXPERIENCES: Experience[] = [
 // Update with your real contact info.
 export const CONTACT_INFO: ContactInfo = {
   email: "mudaurotondwaagriment2007@gmail.com", // replace with your email
+  phone: "+27 64 624 3837",
   location: "South Africa (Remote-Friendly)",
   availability: "Open to freelance projects & full-time roles",
   socials: [

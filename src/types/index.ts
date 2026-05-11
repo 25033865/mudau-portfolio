@@ -52,6 +52,7 @@ export interface SocialLink {
 
 export interface ContactInfo {
   email: string;
+  phone: string;
   location: string;
   availability: string;
   socials: SocialLink[];

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Github, Linkedin, MessageCircle, Send, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Github, Linkedin, MessageCircle, Send, CheckCircle, Phone } from "lucide-react";
 import { CONTACT_INFO, PERSONAL_INFO } from "@/lib/data";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -67,6 +67,19 @@ export default function ContactSection() {
                 <div className="min-w-0">
                   <p className="font-body text-xs text-muted mb-0.5 uppercase tracking-wider">Email</p>
                   <p className="font-body text-text text-sm break-all sm:break-normal">{CONTACT_INFO.email}</p>
+                </div>
+              </a>
+
+              <a
+                href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-4 p-4 sm:p-5 glass rounded-xl hover:border-accent/30 transition-all group"
+              >
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-accent/10 transition-colors group-hover:bg-accent/20">
+                  <Phone size={18} className="text-accent" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-body text-xs text-muted mb-0.5 uppercase tracking-wider">Phone</p>
+                  <p className="font-body text-text text-sm">{CONTACT_INFO.phone}</p>
                 </div>
               </a>
 
