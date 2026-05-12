@@ -1,7 +1,8 @@
 "use client";
 
+import NextImage from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   BrainCircuit,
@@ -9,12 +10,16 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  FileText,
   Home,
+  Image as ImageIcon,
   Layers3,
   Loader2,
+  Plus,
   RefreshCcw,
   Sparkles,
   Trophy,
+  X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -30,12 +35,25 @@ type QuizQuestion = {
   q: string;
   options: string[];
   correct: number;
+  explanation?: string;
 };
 
 type ScheduleItem = {
   time: string;
   topic: string;
   duration: string;
+};
+
+type AttachmentKind = "image" | "text" | "document" | "file";
+
+type StudyAttachment = {
+  id: string;
+  file: File;
+  name: string;
+  size: number;
+  type: string;
+  kind: AttachmentKind;
+  previewUrl?: string;
 };
 
 type StudyKit = {
@@ -45,6 +63,8 @@ type StudyKit = {
   schedule: ScheduleItem[];
   tip: string;
 };
+
+const questionCountOptions = [5, 10, 15, 20];
 
 const pages: { id: PageId; label: string; icon: LucideIcon }[] = [
   { id: "home", label: "Home", icon: Home },
@@ -73,6 +93,68 @@ function formatSubject(subject: string) {
   return subject.charAt(0).toUpperCase() + subject.slice(1);
 }
 
+function formatFileSize(size: number) {
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${Math.round(size / 102.4) / 10} KB`;
+  return `${Math.round(size / 1024 / 102.4) / 10} MB`;
+}
+
+function getAttachmentKind(file: File): AttachmentKind {
+  const extension = file.name.split(".").pop()?.toLowerCase();
+  const textExtensions = new Set([
+    "txt",
+    "md",
+    "csv",
+    "json",
+    "rtf",
+    "log",
+    "html",
+    "css",
+    "js",
+    "jsx",
+    "ts",
+    "tsx",
+    "xml",
+    "yaml",
+    "yml",
+  ]);
+  const documentExtensions = new Set(["pdf", "docx", "pptx", "xlsx"]);
+
+  if (file.type.startsWith("image/")) return "image";
+  if (file.type.startsWith("text/") || (extension && textExtensions.has(extension))) {
+    return "text";
+  }
+  if (extension && documentExtensions.has(extension)) return "document";
+  return "file";
+}
+
+function shuffleArray<T>(items: T[]) {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
+function shuffleQuizQuestions(questions: QuizQuestion[]) {
+  return shuffleArray(questions).map((question) => {
+    const options = question.options.map((option, index) => ({
+      option,
+      wasCorrect: index === question.correct,
+    }));
+    const shuffledOptions = shuffleArray(options);
+
+    return {
+      ...question,
+      options: shuffledOptions.map(({ option }) => option),
+      correct: shuffledOptions.findIndex(({ wasCorrect }) => wasCorrect),
+    };
+  });
+}
+
 function StudyCard({
   children,
   className,
@@ -92,9 +174,20 @@ function StudyCard({
   );
 }
 
-function CardTitle({ children }: { children: React.ReactNode }) {
+function CardTitle({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="mb-3 font-display text-[11px] font-bold uppercase tracking-[0.08em] text-[#888899]">
+    <div
+      className={cn(
+        "mb-3 font-display text-[11px] font-bold uppercase tracking-[0.08em] text-[#888899]",
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -165,7 +258,9 @@ function EmptyState({
 export default function StudyBuddyPage() {
   const [activePage, setActivePage] = useState<PageId>("home");
   const [notes, setNotes] = useState("");
+  const [attachments, setAttachments] = useState<StudyAttachment[]>([]);
   const [subject, setSubject] = useState("general");
+  const [questionCount, setQuestionCount] = useState(10);
   const [kit, setKit] = useState<StudyKit | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState("");
@@ -182,21 +277,107 @@ export default function StudyBuddyPage() {
   const [completedSchedule, setCompletedSchedule] = useState<Set<number>>(
     () => new Set([0])
   );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const previewUrls = useRef<Set<string>>(new Set());
 
   const currentFlashcard = kit?.flashcards[flashcardIndex];
   const currentQuiz = kit?.quiz[quizIndex];
   const selectedSubjectLabel = useMemo(() => formatSubject(subject), [subject]);
   const quizAnswered = selectedAnswer !== null;
 
+  useEffect(() => {
+    const activePreviewUrls = previewUrls.current;
+
+    return () => {
+      activePreviewUrls.forEach((url) => URL.revokeObjectURL(url));
+      activePreviewUrls.clear();
+    };
+  }, []);
+
   function showPage(page: PageId) {
+    if (page === "quiz" && kit?.quiz.length) {
+      setKit((current) =>
+        current ? { ...current, quiz: shuffleQuizQuestions(current.quiz) } : current
+      );
+      setQuizIndex(0);
+      setQuizScore(0);
+      setSelectedAnswer(null);
+      setQuizComplete(false);
+    }
+
     setActivePage(page);
+  }
+
+  function openAttachmentPicker() {
+    fileInputRef.current?.click();
+  }
+
+  function handleFilesSelected(event: React.ChangeEvent<HTMLInputElement>) {
+    const selectedFiles = Array.from(event.target.files ?? []);
+    event.target.value = "";
+
+    if (!selectedFiles.length) return;
+
+    const maxFiles = 8;
+    const maxFileSize = 10 * 1024 * 1024;
+    const availableSlots = Math.max(0, maxFiles - attachments.length);
+
+    if (availableSlots === 0) {
+      setError("Remove an attachment before adding another one.");
+      return;
+    }
+
+    const acceptedFiles = selectedFiles
+      .filter((file) => file.size <= maxFileSize)
+      .slice(0, availableSlots);
+
+    if (acceptedFiles.length !== selectedFiles.length) {
+      setError("Some files were skipped. You can attach up to 8 files, 10 MB each.");
+    } else {
+      setError("");
+    }
+
+    const nextAttachments = acceptedFiles.map((file) => {
+      const kind = getAttachmentKind(file);
+      const previewUrl = kind === "image" ? URL.createObjectURL(file) : undefined;
+
+      if (previewUrl) {
+        previewUrls.current.add(previewUrl);
+      }
+
+      return {
+        id: `${file.name}-${file.size}-${file.lastModified}-${Math.random().toString(36).slice(2)}`,
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        kind,
+        previewUrl,
+      };
+    });
+
+    setAttachments((current) => [...current, ...nextAttachments]);
+  }
+
+  function removeAttachment(id: string) {
+    setAttachments((current) => {
+      const removed = current.find((attachment) => attachment.id === id);
+
+      if (removed?.previewUrl) {
+        URL.revokeObjectURL(removed.previewUrl);
+        previewUrls.current.delete(removed.previewUrl);
+      }
+
+      return current.filter((attachment) => attachment.id !== id);
+    });
   }
 
   async function generateAll() {
     const trimmedNotes = notes.trim();
+    const hasAttachments = attachments.length > 0;
 
-    if (!trimmedNotes) {
-      setError("Paste your notes first.");
+    if (!trimmedNotes && !hasAttachments) {
+      setError("Paste notes or attach a file first.");
       setActivePage("generate");
       return;
     }
@@ -205,10 +386,17 @@ export default function StudyBuddyPage() {
     setError("");
 
     try {
+      const formData = new FormData();
+      formData.append("notes", trimmedNotes);
+      formData.append("subject", subject);
+      formData.append("questionCount", String(questionCount));
+      attachments.forEach((attachment) => {
+        formData.append("attachments", attachment.file);
+      });
+
       const response = await fetch("/api/studybuddy", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notes: trimmedNotes, subject }),
+        body: formData,
       });
 
       const payload = await response.json();
@@ -218,7 +406,7 @@ export default function StudyBuddyPage() {
       }
 
       const nextKit = payload as StudyKit;
-      setKit(nextKit);
+      setKit({ ...nextKit, quiz: shuffleQuizQuestions(nextKit.quiz) });
       setFlashcardIndex(0);
       setLearnedFlashcards(new Set());
       setQuizIndex(0);
@@ -282,6 +470,9 @@ export default function StudyBuddyPage() {
   }
 
   function restartQuiz() {
+    setKit((current) =>
+      current ? { ...current, quiz: shuffleQuizQuestions(current.quiz) } : current
+    );
     setQuizIndex(0);
     setQuizScore(0);
     setSelectedAnswer(null);
@@ -387,13 +578,78 @@ export default function StudyBuddyPage() {
     return (
       <div className="animate-fade-in-up">
         <StudyCard className="mb-5">
-          <CardTitle>Your notes</CardTitle>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <CardTitle className="mb-0">Your notes</CardTitle>
+            <GhostButton
+              type="button"
+              onClick={openAttachmentPicker}
+              className="min-h-10 shrink-0 px-3 py-2"
+              aria-label="Attach files or photos"
+              title="Attach files or photos"
+            >
+              <Plus size={16} />
+              <span className="hidden sm:inline">Attach</span>
+            </GhostButton>
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept="image/*,.txt,.md,.csv,.json,.rtf,.log,.pdf,.docx,.pptx,.xlsx"
+            className="hidden"
+            onChange={handleFilesSelected}
+          />
           <textarea
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
             placeholder="Paste your lecture notes, textbook excerpts, or study material here..."
             className="min-h-40 w-full resize-y rounded-lg border border-[#2a2a3a] bg-[#1a1a24] p-4 text-sm leading-7 text-[#f0f0ff] outline-none transition placeholder:text-[#888899] focus:border-[#00e5ff]"
           />
+          {attachments.length > 0 && (
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              {attachments.map((attachment) => {
+                const Icon = attachment.kind === "image" ? ImageIcon : FileText;
+
+                return (
+                  <div
+                    key={attachment.id}
+                    className="grid min-w-0 grid-cols-[2.5rem_minmax(0,1fr)_2rem] items-center gap-3 rounded-lg border border-[#2a2a3a] bg-[#1a1a24] p-2"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg border border-[#2a2a3a] bg-[#111118] text-[#00e5ff]">
+                      {attachment.previewUrl ? (
+                        <NextImage
+                          src={attachment.previewUrl}
+                          alt=""
+                          width={40}
+                          height={40}
+                          unoptimized
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <Icon size={18} />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-medium text-[#f0f0ff]">
+                        {attachment.name}
+                      </div>
+                      <div className="mt-0.5 text-xs text-[#888899]">
+                        {formatFileSize(attachment.size)}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeAttachment(attachment.id)}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-[#888899] transition hover:bg-[#2a2a3a] hover:text-[#f0f0ff]"
+                      aria-label={`Remove ${attachment.name}`}
+                    >
+                      <X size={15} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <select
               value={subject}
@@ -406,6 +662,20 @@ export default function StudyBuddyPage() {
                 </option>
               ))}
             </select>
+            <label className="min-w-0 sm:w-40">
+              <span className="sr-only">Number of quiz questions</span>
+              <select
+                value={questionCount}
+                onChange={(event) => setQuestionCount(Number(event.target.value))}
+                className="w-full cursor-pointer rounded-lg border border-[#2a2a3a] bg-[#1a1a24] px-4 py-3 text-sm text-[#f0f0ff] outline-none focus:border-[#00e5ff]"
+              >
+                {questionCountOptions.map((count) => (
+                  <option key={count} value={count}>
+                    {count} questions
+                  </option>
+                ))}
+              </select>
+            </label>
             <PrimaryButton className="w-full sm:w-auto" onClick={generateAll} disabled={isGenerating}>
               {isGenerating ? <Loader2 className="animate-spin" size={16} /> : <Sparkles size={16} />}
               Generate
@@ -440,7 +710,7 @@ export default function StudyBuddyPage() {
               </GhostButton>
               <GhostButton onClick={() => showPage("quiz")} className="w-full">
                 <BrainCircuit size={16} />
-                Quiz
+                Quiz ({kit.quiz.length})
               </GhostButton>
               <GhostButton onClick={() => showPage("schedule")} className="w-full">
                 <CalendarDays size={16} />
@@ -597,6 +867,11 @@ export default function StudyBuddyPage() {
             )}
             {quizAnswered && selectedAnswer !== currentQuiz.correct && (
               <span className="text-[#ff4466]">Incorrect. The answer is highlighted.</span>
+            )}
+            {quizAnswered && currentQuiz.explanation && (
+              <div className="mt-3 rounded-lg border border-[#2a2a3a] bg-[#111118] p-3 text-[#c8c8d8]">
+                {currentQuiz.explanation}
+              </div>
             )}
           </div>
         </StudyCard>
