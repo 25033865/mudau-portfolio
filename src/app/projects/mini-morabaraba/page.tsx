@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Difficulty = "easy" | "normal" | "hard";
@@ -396,6 +398,14 @@ export default function MiniMorabarabaPage() {
 
   return (
     <main className="morabaraba-page">
+      <Link
+        href="/#projects"
+        className="portfolio-back inline-flex min-h-10 items-center gap-2 rounded-lg border border-transparent bg-transparent px-3 text-sm text-muted transition hover:border-accent/50 hover:bg-accent/10 hover:text-accent"
+      >
+        <ArrowLeft size={18} />
+        Portfolio
+      </Link>
+
       <div className="inner">
         <div className="heading">
           <div className="tag">Web Game</div>
@@ -689,6 +699,22 @@ export default function MiniMorabarabaPage() {
           background-size: 40px 40px;
           color: var(--game-text);
           font-family: "Segoe UI", system-ui, sans-serif;
+          position: relative;
+        }
+
+        .morabaraba-page .portfolio-back {
+          position: absolute;
+          left: clamp(14px, calc((100vw - 1152px) / 2), 999px);
+          top: 25px;
+          z-index: 2;
+          text-decoration: none;
+          font-family: "Satoshi", system-ui, sans-serif;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+        }
+
+        .morabaraba-page .portfolio-back:hover {
+          background: rgba(0, 229, 255, 0.08);
         }
 
         .morabaraba-page .inner {
@@ -950,7 +976,13 @@ export default function MiniMorabarabaPage() {
 
         @media (max-width: 520px) {
           .morabaraba-page {
-            padding: 14px;
+            align-items: flex-start;
+            padding: 84px 14px 14px;
+          }
+
+          .morabaraba-page .portfolio-back {
+            left: 14px;
+            top: 14px;
           }
 
           .morabaraba-page .rules-grid {
