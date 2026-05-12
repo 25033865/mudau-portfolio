@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ExternalLink, Github, Smartphone, Joystick, Apple } from "lucide-react";
+import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode } from "lucide-react";
 import { PROJECTS } from "@/lib/data";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
 import type { Project } from "@/types";
@@ -17,15 +17,18 @@ const FILTERS: { label: string; value: FilterType }[] = [
   { label: "In Progress", value: "in-progress" },
 ];
 
-function PlatformIcon({
+function ProjectIcon({
   platform,
+  icon,
   size = 14,
   className,
 }: {
   platform: Project["platform"];
+  icon?: Project["icon"];
   size?: number;
   className?: string;
 }) {
+  if (icon === "qr-code") return <QrCode size={size} className={className} />;
   if (platform === "ios") return <Apple size={size} className={className} />;
   if (platform === "android") return <Smartphone size={size} className={className} />;
   if (platform === "web") return <Joystick size={size} className={className} />;
@@ -68,7 +71,7 @@ function ProjectCard({ project }: { project: Project }) {
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 sm:h-12 sm:w-12">
-          <PlatformIcon platform={project.platform} size={22} className="text-accent" />
+          <ProjectIcon platform={project.platform} icon={project.icon} size={22} className="text-accent" />
         </div>
         <div className="flex gap-2">
           {project.githubUrl && (
@@ -113,7 +116,7 @@ function ProjectCard({ project }: { project: Project }) {
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-2 font-body text-xs text-muted">
-          <PlatformIcon platform={project.platform} />
+          <ProjectIcon platform={project.platform} icon={project.icon} />
           <span>{getPlatformLabel(project.platform)}</span>
           <span>·</span>
           <span>{project.year}</span>

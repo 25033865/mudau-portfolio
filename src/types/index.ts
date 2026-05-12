@@ -6,6 +6,7 @@ export interface Project {
   longDescription?: string;
   tags: string[];
   platform: "ios" | "android" | "cross-platform" | "web";
+  icon?: "qr-code";
   status: "live" | "in-progress" | "concept";
   year: number;
   imageUrl?: string;
