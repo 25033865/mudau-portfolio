@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ExternalLink, Github, Smartphone, Globe, Apple } from "lucide-react";
+import { ExternalLink, Github, Smartphone, Joystick, Apple } from "lucide-react";
 import { PROJECTS } from "@/lib/data";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
 import type { Project } from "@/types";
@@ -28,7 +28,7 @@ function PlatformIcon({
 }) {
   if (platform === "ios") return <Apple size={size} className={className} />;
   if (platform === "android") return <Smartphone size={size} className={className} />;
-  if (platform === "web") return <Globe size={size} className={className} />;
+  if (platform === "web") return <Joystick size={size} className={className} />;
   return <Smartphone size={size} className={className} />;
 }
 

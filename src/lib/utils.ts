@@ -18,7 +18,7 @@ export function getPlatformLabel(platform: string): string {
     ios: "iOS",
     android: "Android",
     "cross-platform": "Cross-Platform",
-    web: "Web App",
+    web: "Game",
   };
   return labels[platform] ?? platform;
 }
