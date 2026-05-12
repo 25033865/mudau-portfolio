@@ -6,11 +6,14 @@ export interface Project {
   longDescription?: string;
   tags: string[];
   platform: "ios" | "android" | "cross-platform" | "web";
-  icon?: "qr-code";
+  platformLabel?: string;
+  section?: "show-ofs" | "projects";
+  icon?: "qr-code" | "portfolio";
   status: "live" | "in-progress" | "concept";
   year: number;
   imageUrl?: string;
   detailUrl?: string;
+  liveUrl?: string;
   appStoreUrl?: string;
   playStoreUrl?: string;
   githubUrl?: string;

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode } from "lucide-react";
-import { PROJECTS } from "@/lib/data";
+import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode, Monitor } from "lucide-react";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
 import type { Project } from "@/types";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -29,6 +29,7 @@ function ProjectIcon({
   className?: string;
 }) {
   if (icon === "qr-code") return <QrCode size={size} className={className} />;
+  if (icon === "portfolio") return <Monitor size={size} className={className} />;
   if (platform === "ios") return <Apple size={size} className={className} />;
   if (platform === "android") return <Smartphone size={size} className={className} />;
   if (platform === "web") return <Joystick size={size} className={className} />;
@@ -37,19 +38,25 @@ function ProjectIcon({
 
 function ProjectCard({ project }: { project: Project }) {
   const router = useRouter();
-  const isClickable = Boolean(project.detailUrl);
+  const projectUrl = project.liveUrl ?? project.appStoreUrl ?? project.playStoreUrl;
+  const isClickable = Boolean(project.detailUrl ?? projectUrl);
 
   const handleCardClick = () => {
     if (project.detailUrl) {
       router.push(project.detailUrl);
+      return;
+    }
+
+    if (projectUrl) {
+      window.open(projectUrl, "_blank", "noopener,noreferrer");
     }
   };
 
   const handleCardKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!project.detailUrl) return;
+    if (!isClickable) return;
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      router.push(project.detailUrl);
+      handleCardClick();
     }
   };
 
@@ -70,8 +77,18 @@ function ProjectCard({ project }: { project: Project }) {
       aria-label={isClickable ? `${project.title} details` : undefined}
     >
       <div className="flex items-start justify-between gap-3">
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 sm:h-12 sm:w-12">
-          <ProjectIcon platform={project.platform} icon={project.icon} size={22} className="text-accent" />
+        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 sm:h-12 sm:w-12">
+          {project.imageUrl ? (
+            <Image
+              src={project.imageUrl}
+              alt={`${project.title} icon`}
+              width={48}
+              height={48}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <ProjectIcon platform={project.platform} icon={project.icon} size={22} className="text-accent" />
+          )}
         </div>
         <div className="flex gap-2">
           {project.githubUrl && (
@@ -86,9 +103,9 @@ function ProjectCard({ project }: { project: Project }) {
               <Github size={16} />
             </a>
           )}
-          {(project.appStoreUrl || project.playStoreUrl) && (
+          {projectUrl && (
             <a
-              href={project.appStoreUrl ?? project.playStoreUrl}
+              href={projectUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted hover:text-accent transition-colors"
@@ -117,7 +134,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
         <div className="flex flex-wrap items-center gap-2 font-body text-xs text-muted">
           <ProjectIcon platform={project.platform} icon={project.icon} />
-          <span>{getPlatformLabel(project.platform)}</span>
+          <span>{project.platformLabel ?? getPlatformLabel(project.platform)}</span>
           <span>·</span>
           <span>{project.year}</span>
         </div>
@@ -141,10 +158,16 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export default function ProjectGallery() {
+type ProjectGalleryProps = {
+  projects: Project[];
+  showFilters?: boolean;
+};
+
+export default function ProjectGallery({ projects, showFilters = true }: ProjectGalleryProps) {
   const [filter, setFilter] = useState<FilterType>("all");
 
-  const filtered = PROJECTS.filter((p) => {
+  const filtered = projects.filter((p) => {
+    if (!showFilters) return true;
     if (filter === "all") return true;
     if (filter === "featured") return p.featured;
     return p.status === filter;
@@ -152,31 +175,36 @@ export default function ProjectGallery() {
 
   return (
     <>
-      <ScrollReveal className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:flex sm:flex-wrap sm:justify-center">
-        {FILTERS.map((f) => (
-          <button
-            key={f.value}
-            onClick={() => setFilter(f.value)}
-            className={cn(
-              "w-full rounded-lg px-3 py-2.5 font-body text-sm transition-all sm:w-auto sm:px-4 sm:py-2",
-              filter === f.value
-                ? "bg-accent text-bg font-semibold"
-                : "border border-border text-muted hover:text-text hover:border-accent/30"
-            )}
-          >
-            {f.label}
-            <span className="ml-1.5 text-xs opacity-60">
-              ({f.value === "all"
-                ? PROJECTS.length
-                : f.value === "featured"
-                ? PROJECTS.filter((p) => p.featured).length
-                : PROJECTS.filter((p) => p.status === f.value).length})
-            </span>
-          </button>
-        ))}
-      </ScrollReveal>
+      {showFilters && (
+        <ScrollReveal className="mt-10 grid grid-cols-2 gap-2 sm:mt-12 sm:flex sm:flex-wrap sm:justify-center">
+          {FILTERS.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => setFilter(f.value)}
+              className={cn(
+                "w-full rounded-lg px-3 py-2.5 font-body text-sm transition-all sm:w-auto sm:px-4 sm:py-2",
+                filter === f.value
+                  ? "bg-accent text-bg font-semibold"
+                  : "border border-border text-muted hover:text-text hover:border-accent/30"
+              )}
+            >
+              {f.label}
+              <span className="ml-1.5 text-xs opacity-60">
+                ({f.value === "all"
+                  ? projects.length
+                  : f.value === "featured"
+                  ? projects.filter((p) => p.featured).length
+                  : projects.filter((p) => p.status === f.value).length})
+              </span>
+            </button>
+          ))}
+        </ScrollReveal>
+      )}
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
+      <div className={cn(
+        "grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3",
+        showFilters ? "mt-10" : "mt-10 sm:mt-12"
+      )}>
         {filtered.map((project, index) => (
           <ScrollReveal
             key={project.id}

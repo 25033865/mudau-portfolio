@@ -2,6 +2,9 @@
 
 import SectionHeader from "@/components/ui/SectionHeader";
 import ProjectGallery from "@/components/sections/ProjectGallery";
+import { PROJECTS } from "@/lib/data";
+
+const showOfsProjects = PROJECTS.filter((project) => project.section !== "projects");
 
 export default function ShowOfsSection() {
   return (
@@ -14,7 +17,7 @@ export default function ShowOfsSection() {
           title="Show"
           titleAccent="OFS"
         />
-        <ProjectGallery />
+        <ProjectGallery projects={showOfsProjects} />
       </div>
     </section>
   );

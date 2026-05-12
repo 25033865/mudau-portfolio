@@ -91,6 +91,19 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "proj-03",
+    title: "RoomRadar",
+    description: "RoomRadar is a booking-style app for discovering, comparing, and reserving rooms and stays.",
+    longDescription: "RoomRadar is an accommodation booking app under development, built to help users search for rooms, compare options, view details, and reserve stays with a smooth mobile-first experience.",
+    tags: ["Room Booking", "Search", "Reservations", "UI/UX"],
+    platform: "cross-platform",
+    status: "in-progress",
+    year: 2025,
+    imageUrl: "/projects/roomradar-icon.svg",
+    section: "projects",
+    featured: true,
+  },
+  {
+    id: "proj-04",
     title: "StudyBuddy",
     description: "AI-powered study planner that generates personalised schedules, flashcards, and quizzes from your notes.",
     detailUrl: "/projects/studybuddy",
@@ -101,7 +114,7 @@ export const PROJECTS: Project[] = [
     featured: true,
   },
   {
-    id: "proj-04",
+    id: "proj-05",
     title: "FitTrack Pro",
     description: "Workout tracker with custom plans, progress analytics, and social challenges for fitness enthusiasts.",
     tags: ["React Native", "GraphQL", "Node.js", "TypeScript"],
@@ -111,7 +124,7 @@ export const PROJECTS: Project[] = [
     featured: false,
   },
   {
-    id: "proj-05",
+    id: "proj-06",
     title: "LocalBites",
     description: "Food discovery app connecting users with authentic local restaurants and hidden gems across South Africa.",
     tags: ["Flutter", "Google Maps API", "Firebase"],
@@ -121,7 +134,7 @@ export const PROJECTS: Project[] = [
     featured: false,
   },
   {
-    id: "proj-06",
+    id: "proj-07",
     title: "TaskFlow",
     description: "Minimal yet powerful task management app with kanban boards, team collaboration, and deadline reminders.",
     tags: ["React Native", "Supabase", "TypeScript", "Expo"],
@@ -129,6 +142,21 @@ export const PROJECTS: Project[] = [
     status: "in-progress",
     year: 2025,
     featured: false,
+  },
+  {
+    id: "proj-08",
+    title: "Personal Portfolio",
+    description: "My personal portfolio website showcasing my work, skills, experience, and contact details in one polished web presence.",
+    longDescription: "A personal portfolio website built to present my developer profile, featured projects, technical skills, and ways to get in touch.",
+    tags: ["Next.js", "Portfolio", "Tailwind CSS", "Responsive"],
+    platform: "web",
+    platformLabel: "Website",
+    icon: "portfolio",
+    status: "live",
+    year: 2026,
+    liveUrl: "https://mudau.me/",
+    section: "projects",
+    featured: true,
   },
 ];
 

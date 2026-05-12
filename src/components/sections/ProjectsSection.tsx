@@ -1,4 +1,8 @@
 import SectionHeader from "@/components/ui/SectionHeader";
+import ProjectGallery from "@/components/sections/ProjectGallery";
+import { PROJECTS } from "@/lib/data";
+
+const appProjects = PROJECTS.filter((project) => project.section === "projects");
 
 export default function ProjectsSection() {
   return (
@@ -11,6 +15,7 @@ export default function ProjectsSection() {
           title="Projects"
           titleAccent=""
         />
+        <ProjectGallery projects={appProjects} showFilters={false} />
       </div>
     </section>
   );
