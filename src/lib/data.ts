@@ -67,13 +67,14 @@ export const SKILLS = {
 export const PROJECTS: Project[] = [
   {
     id: "proj-01",
-    title: "AgriSense",
-    description: "Smart farming companion app helping South African farmers track soil health, weather, and crop cycles in real-time.",
-    longDescription: "Built with Flutter and Firebase, AgriSense connects to IoT sensors to deliver real-time soil and weather data. Includes push notifications, offline mode, and crop advisory powered by ML.",
-    tags: ["Flutter", "Firebase", "IoT", "Machine Learning"],
-    platform: "cross-platform",
+    title: "Mini Morabaraba",
+    description: "A web game that will test your brain with strategic moves, careful planning, and quick decisions.",
+    longDescription: "Mini Morabaraba is a web game that challenges players to think ahead, protect their pieces, and outsmart their opponent with every move.",
+    detailUrl: "/projects/mini-morabaraba",
+    tags: ["Web Game", "Strategy", "JavaScript", "HTML5"],
+    platform: "web",
     status: "live",
-    year: 2024,
+    year: 2025,
     featured: true,
   },
   {
