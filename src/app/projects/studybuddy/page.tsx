@@ -31,11 +31,15 @@ type Flashcard = {
   a: string;
 };
 
+type QuizDifficulty = "easy" | "medium" | "hard";
+
 type QuizQuestion = {
   q: string;
   options: string[];
   correct: number;
   explanation?: string;
+  difficulty?: QuizDifficulty;
+  topic?: string;
 };
 
 type ScheduleItem = {
@@ -65,6 +69,13 @@ type StudyKit = {
 };
 
 const questionCountOptions = [5, 10, 15, 20];
+const optionLabels = ["A", "B", "C", "D"];
+
+const difficultyStyles: Record<QuizDifficulty, string> = {
+  easy: "border-[#00ff88]/30 bg-[#00ff88]/10 text-[#00ff88]",
+  medium: "border-[#00e5ff]/30 bg-[#00e5ff]/10 text-[#00e5ff]",
+  hard: "border-[#ffb020]/35 bg-[#ffb020]/10 text-[#ffcf70]",
+};
 
 const pages: { id: PageId; label: string; icon: LucideIcon }[] = [
   { id: "home", label: "Home", icon: Home },
@@ -91,6 +102,11 @@ function formatSubject(subject: string) {
   if (subject === "cs") return "Computer Science";
   if (subject === "maths") return "Mathematics";
   return subject.charAt(0).toUpperCase() + subject.slice(1);
+}
+
+function formatDifficulty(difficulty?: QuizDifficulty) {
+  if (!difficulty) return "Mixed";
+  return difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
 }
 
 function formatFileSize(size: number) {
@@ -140,6 +156,7 @@ function shuffleArray<T>(items: T[]) {
 }
 
 function shuffleQuizQuestions(questions: QuizQuestion[]) {
+  // New quiz sessions always get a fresh question order and fresh answer order.
   return shuffleArray(questions).map((question) => {
     const options = question.options.map((option, index) => ({
       option,
@@ -150,7 +167,7 @@ function shuffleQuizQuestions(questions: QuizQuestion[]) {
     return {
       ...question,
       options: shuffledOptions.map(({ option }) => option),
-      correct: shuffledOptions.findIndex(({ wasCorrect }) => wasCorrect),
+      correct: Math.max(0, shuffledOptions.findIndex(({ wasCorrect }) => wasCorrect)),
     };
   });
 }
@@ -294,8 +311,9 @@ export default function StudyBuddyPage() {
     };
   }, []);
 
-  function showPage(page: PageId) {
-    if (page === "quiz" && kit?.quiz.length) {
+  function startFreshQuizSession() {
+    if (!kit?.quiz.length) return;
+
       setKit((current) =>
         current ? { ...current, quiz: shuffleQuizQuestions(current.quiz) } : current
       );
@@ -303,6 +321,11 @@ export default function StudyBuddyPage() {
       setQuizScore(0);
       setSelectedAnswer(null);
       setQuizComplete(false);
+  }
+
+  function showPage(page: PageId) {
+    if (page === "quiz") {
+      startFreshQuizSession();
     }
 
     setActivePage(page);
@@ -470,13 +493,7 @@ export default function StudyBuddyPage() {
   }
 
   function restartQuiz() {
-    setKit((current) =>
-      current ? { ...current, quiz: shuffleQuizQuestions(current.quiz) } : current
-    );
-    setQuizIndex(0);
-    setQuizScore(0);
-    setSelectedAnswer(null);
-    setQuizComplete(false);
+    startFreshQuizSession();
   }
 
   function toggleScheduleItem(index: number) {
@@ -821,22 +838,45 @@ export default function StudyBuddyPage() {
       );
     }
 
+    const difficulty = currentQuiz.difficulty ?? "medium";
+    const topic = currentQuiz.topic?.trim() || selectedSubjectLabel;
+    const progressPercent = Math.round(((quizIndex + 1) / kit.quiz.length) * 100);
+
     return (
       <div className="animate-fade-in-up">
-        <div className="mb-5 flex gap-1">
-          {kit.quiz.map((question, index) => (
-            <span
-              key={`${question.q}-${index}`}
-              className={cn(
-                "h-1 flex-1 rounded-full bg-[#22222f]",
-                index <= quizIndex && "bg-[#00e5ff]"
-              )}
+        <div className="mb-5">
+          <div className="mb-2 flex items-center justify-between gap-3 text-xs text-[#888899]">
+            <span>
+              Question {quizIndex + 1} of {kit.quiz.length}
+            </span>
+            <span>
+              Score <strong className="text-[#00e5ff]">{quizScore}</strong>
+            </span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-[#22222f]">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-[#00e5ff] to-[#00ff88] transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
             />
-          ))}
+          </div>
         </div>
 
         <StudyCard>
-          <h2 className="mb-5 font-display text-lg font-bold leading-7 sm:text-xl sm:leading-8">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-bold",
+                difficultyStyles[difficulty]
+              )}
+            >
+              {formatDifficulty(currentQuiz.difficulty)}
+            </span>
+            <span className="inline-flex max-w-full items-center rounded-full border border-[#2a2a3a] bg-[#1a1a24] px-2.5 py-1 text-xs font-medium text-[#c8c8d8]">
+              <span className="truncate">{topic}</span>
+            </span>
+          </div>
+
+          <h2 className="mb-5 whitespace-pre-wrap font-display text-lg font-bold leading-7 sm:text-xl sm:leading-8">
             {currentQuiz.q}
           </h2>
           <div className="grid gap-3">
@@ -846,39 +886,60 @@ export default function StudyBuddyPage() {
 
               return (
                 <button
-                  key={option}
+                  key={`${option}-${index}`}
                   disabled={quizAnswered}
                   onClick={() => answerQuestion(index)}
+                  aria-pressed={selectedAnswer === index}
                   className={cn(
-                    "rounded-lg border border-[#2a2a3a] bg-[#1a1a24] px-4 py-3 text-left text-sm text-[#f0f0ff] transition hover:border-[#00e5ff] hover:text-[#00e5ff] disabled:cursor-default",
+                    "grid min-h-[3.5rem] w-full grid-cols-[2rem_minmax(0,1fr)] items-start gap-3 rounded-lg border border-[#2a2a3a] bg-[#1a1a24] px-3.5 py-3 text-left text-sm text-[#f0f0ff] transition hover:border-[#00e5ff] hover:text-[#00e5ff] disabled:cursor-default sm:px-4",
                     quizAnswered && isCorrect && "border-[#00ff88] bg-[#00ff88]/10 text-[#00ff88]",
-                    isWrong && "border-[#ff4466] bg-[#ff4466]/10 text-[#ff4466]"
+                    isWrong && "border-[#ff4466] bg-[#ff4466]/10 text-[#ff8aa0]",
+                    quizAnswered && !isCorrect && !isWrong && "opacity-70"
                   )}
                 >
-                  {option}
+                  <span
+                    className={cn(
+                      "flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[#2a2a3a] bg-[#111118] font-display text-xs font-bold text-[#888899]",
+                      quizAnswered && isCorrect && "border-[#00ff88]/40 text-[#00ff88]",
+                      isWrong && "border-[#ff4466]/40 text-[#ff8aa0]"
+                    )}
+                  >
+                    {optionLabels[index]}
+                  </span>
+                  <span className="min-w-0 whitespace-pre-wrap leading-6">{option}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="mt-4 min-h-5 text-sm">
-            {quizAnswered && selectedAnswer === currentQuiz.correct && (
-              <span className="text-[#00ff88]">Correct.</span>
-            )}
-            {quizAnswered && selectedAnswer !== currentQuiz.correct && (
-              <span className="text-[#ff4466]">Incorrect. The answer is highlighted.</span>
-            )}
-            {quizAnswered && currentQuiz.explanation && (
-              <div className="mt-3 rounded-lg border border-[#2a2a3a] bg-[#111118] p-3 text-[#c8c8d8]">
-                {currentQuiz.explanation}
+          {quizAnswered && (
+            <div
+              className={cn(
+                "mt-5 rounded-lg border p-4 text-sm leading-6",
+                selectedAnswer === currentQuiz.correct
+                  ? "border-[#00ff88]/30 bg-[#00ff88]/10 text-[#caffdf]"
+                  : "border-[#ff4466]/30 bg-[#ff4466]/10 text-[#ffd0d8]"
+              )}
+            >
+              <div className="font-display text-sm font-bold">
+                {selectedAnswer === currentQuiz.correct ? "Correct" : "Not quite"}
               </div>
-            )}
-          </div>
+              {selectedAnswer !== currentQuiz.correct && (
+                <p className="mt-2 text-[#f0f0ff]">
+                  Correct answer: {optionLabels[currentQuiz.correct]}.{" "}
+                  {currentQuiz.options[currentQuiz.correct]}
+                </p>
+              )}
+              {currentQuiz.explanation && (
+                <p className="mt-2 text-[#c8c8d8]">{currentQuiz.explanation}</p>
+              )}
+            </div>
+          )}
         </StudyCard>
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <span className="text-sm text-[#888899]">
-            Score: <strong className="text-[#00e5ff]">{quizScore}</strong>
+            {progressPercent}% complete
           </span>
           {quizAnswered && (
             <GhostButton onClick={nextQuestion}>
