@@ -10,6 +10,8 @@
     "deploy": "firebase deploy --project mudau-1d1cb"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.19",
     "jszip": "^3.10.1",
@@ -18,7 +20,8 @@
     "qrcode.react": "^4.2.0",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.4.0"
+    "tailwind-merge": "^2.4.0",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@types/node": "^20",

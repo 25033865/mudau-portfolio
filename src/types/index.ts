@@ -8,7 +8,7 @@ export interface Project {
   platform: "ios" | "android" | "cross-platform" | "web";
   platformLabel?: string;
   section?: "show-ofs" | "projects";
-  icon?: "qr-code" | "portfolio";
+  icon?: "qr-code" | "portfolio" | "space";
   status: "live" | "in-progress" | "concept";
   year: number;
   imageUrl?: string;

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode, Monitor } from "lucide-react";
+import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode, Monitor, Sparkles, Play, Wand2, Telescope } from "lucide-react";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
 import type { Project } from "@/types";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -30,16 +30,44 @@ function ProjectIcon({
 }) {
   if (icon === "qr-code") return <QrCode size={size} className={className} />;
   if (icon === "portfolio") return <Monitor size={size} className={className} />;
+  if (icon === "space") return <Sparkles size={size} className={className} />;
   if (platform === "ios") return <Apple size={size} className={className} />;
   if (platform === "android") return <Smartphone size={size} className={className} />;
   if (platform === "web") return <Joystick size={size} className={className} />;
   return <Smartphone size={size} className={className} />;
 }
 
+function PlanetGeneratorBackdrop() {
+  return (
+    <div className="floating-planets-card-bg" aria-hidden="true">
+      <span className="floating-star floating-star-a" />
+      <span className="floating-star floating-star-b" />
+      <span className="floating-star floating-star-c" />
+      <span className="floating-planet floating-planet-a" />
+      <span className="floating-planet floating-planet-b" />
+    </div>
+  );
+}
+
+function PlanetGeneratorIcon() {
+  return (
+    <div className="floating-planets-icon" aria-hidden="true">
+      <span className="floating-icon-star floating-icon-star-a" />
+      <span className="floating-icon-star floating-icon-star-b" />
+      <span className="floating-icon-planet floating-icon-planet-a" />
+      <span className="floating-icon-planet floating-icon-planet-b" />
+    </div>
+  );
+}
+
 function ProjectCard({ project }: { project: Project }) {
   const router = useRouter();
   const projectUrl = project.liveUrl ?? project.appStoreUrl ?? project.playStoreUrl;
   const isClickable = Boolean(project.detailUrl ?? projectUrl);
+  const hasPlanetGeneratorPreview = project.icon === "space";
+  const hasPlayButton = project.detailUrl === "/projects/mini-morabaraba";
+  const hasGenerateButton = project.detailUrl === "/projects/qrforge";
+  const hasExploreButton = project.detailUrl === "/projects/planet-generator";
 
   const handleCardClick = () => {
     if (project.detailUrl) {
@@ -64,10 +92,16 @@ function ProjectCard({ project }: { project: Project }) {
     event.stopPropagation();
   };
 
+  const handlePlayButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    handleCardClick();
+  };
+
   return (
     <div
       className={cn(
-        "glass flex h-full min-w-0 flex-col gap-4 rounded-2xl p-5 transition-all hover:border-accent/20 group sm:p-6",
+        "glass group relative h-full min-w-0 overflow-hidden rounded-2xl p-5 transition-all hover:border-accent/20 sm:p-6",
+        hasPlanetGeneratorPreview && "border-accent2/20 bg-[#080b14]",
         isClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       )}
       onClick={handleCardClick}
@@ -76,9 +110,14 @@ function ProjectCard({ project }: { project: Project }) {
       tabIndex={isClickable ? 0 : undefined}
       aria-label={isClickable ? `${project.title} details` : undefined}
     >
-      <div className="flex items-start justify-between gap-3">
+      {hasPlanetGeneratorPreview && <PlanetGeneratorBackdrop />}
+
+      <div className="relative z-10 flex h-full min-w-0 flex-col gap-4">
+        <div className="flex items-start justify-between gap-3">
         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 sm:h-12 sm:w-12">
-          {project.imageUrl ? (
+          {hasPlanetGeneratorPreview ? (
+            <PlanetGeneratorIcon />
+          ) : project.imageUrl ? (
             <Image
               src={project.imageUrl}
               alt={`${project.title} icon`}
@@ -144,6 +183,24 @@ function ProjectCard({ project }: { project: Project }) {
         {project.description}
       </p>
 
+      {(hasPlayButton || hasGenerateButton || hasExploreButton) && (
+        <button
+          type="button"
+          onClick={handlePlayButtonClick}
+          className="inline-flex w-fit items-center gap-2 rounded-lg border border-accent/35 bg-accent/10 px-4 py-2 font-body text-sm font-semibold text-accent transition hover:border-accent hover:bg-accent hover:text-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
+          aria-label={`${hasPlayButton ? "Play" : hasExploreButton ? "Explore" : "Generate with"} ${project.title}`}
+        >
+          {hasPlayButton ? (
+            <Play size={15} fill="currentColor" />
+          ) : hasExploreButton ? (
+            <Telescope size={15} />
+          ) : (
+            <Wand2 size={15} />
+          )}
+          {hasPlayButton ? "Play" : hasExploreButton ? "Explore" : "Generate"}
+        </button>
+      )}
+
       <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
         {project.tags.map((tag) => (
           <span
@@ -153,6 +210,7 @@ function ProjectCard({ project }: { project: Project }) {
             {tag}
           </span>
         ))}
+      </div>
       </div>
     </div>
   );
