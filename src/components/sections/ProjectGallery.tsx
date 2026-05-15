@@ -193,7 +193,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div
       className={cn(
-        "glass group relative h-full min-w-0 overflow-hidden rounded-2xl p-5 transition-all hover:border-accent/20 sm:p-6",
+        "glass project-card-shell group relative h-full min-w-0 overflow-hidden rounded-2xl p-5 transition-all hover:border-accent/20 sm:p-6",
         hasMiniMorabarabaPreview && "border-accent/20 bg-[#0a0e1a]",
         hasQrForgePreview && "border-accent/20 bg-[#071016]",
         hasPlanetGeneratorPreview && "border-accent2/20 bg-[#080b14]",
