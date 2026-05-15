@@ -49,6 +49,97 @@ function PlanetGeneratorBackdrop() {
   );
 }
 
+function QRForgeBackdrop() {
+  return (
+    <div className="qrforge-card-bg" aria-hidden="true">
+      <span className="qrforge-scanline" />
+      <span className="qrforge-preview-panel">
+        <span className="qrforge-preview-code" />
+      </span>
+      <span className="qrforge-control qrforge-control-a" />
+      <span className="qrforge-control qrforge-control-b" />
+      <span className="qrforge-control qrforge-control-c" />
+      <span className="qrforge-chip qrforge-chip-a" />
+      <span className="qrforge-chip qrforge-chip-b" />
+    </div>
+  );
+}
+
+function QRForgeIcon() {
+  return (
+    <div className="qrforge-icon" aria-hidden="true">
+      <QrCode size={25} strokeWidth={2.4} />
+    </div>
+  );
+}
+
+function MiniMorabarabaBackdrop() {
+  return (
+    <div className="morabaraba-card-bg" aria-hidden="true">
+      <span className="morabaraba-card-tag">Placing Phase</span>
+      <span className="morabaraba-card-status">Your turn - place a piece</span>
+      <span className="morabaraba-diff-pill morabaraba-diff-pill-a">Easy</span>
+      <span className="morabaraba-diff-pill morabaraba-diff-pill-b">Hard</span>
+      <svg className="morabaraba-card-board" viewBox="0 0 180 180" role="presentation">
+        <rect width="180" height="180" rx="16" fill="#0d1220" />
+        <g stroke="rgba(0,229,255,0.06)" strokeWidth="0.5">
+          <line x1="0" y1="60" x2="180" y2="60" />
+          <line x1="0" y1="120" x2="180" y2="120" />
+          <line x1="60" y1="0" x2="60" y2="180" />
+          <line x1="120" y1="0" x2="120" y2="180" />
+        </g>
+        <g stroke="#00bcd4" strokeLinecap="round" strokeWidth="2" opacity="0.62">
+          <line x1="30" y1="30" x2="90" y2="30" />
+          <line x1="90" y1="30" x2="150" y2="30" />
+          <line x1="30" y1="90" x2="90" y2="90" />
+          <line x1="90" y1="90" x2="150" y2="90" />
+          <line x1="30" y1="150" x2="90" y2="150" />
+          <line x1="90" y1="150" x2="150" y2="150" />
+          <line x1="30" y1="30" x2="30" y2="90" />
+          <line x1="30" y1="90" x2="30" y2="150" />
+          <line x1="90" y1="30" x2="90" y2="90" />
+          <line x1="90" y1="90" x2="90" y2="150" />
+          <line x1="150" y1="30" x2="150" y2="90" />
+          <line x1="150" y1="90" x2="150" y2="150" />
+          <line x1="30" y1="30" x2="90" y2="90" />
+          <line x1="90" y1="90" x2="150" y2="150" />
+          <line x1="150" y1="30" x2="90" y2="90" />
+          <line x1="90" y1="90" x2="30" y2="150" />
+        </g>
+        <g className="morabaraba-win-line" stroke="#00e5ff" strokeLinecap="round" strokeWidth="4">
+          <line x1="30" y1="30" x2="150" y2="150" />
+        </g>
+        <g>
+          {[30, 90, 150].flatMap((y) =>
+            [30, 90, 150].map((x) => (
+              <circle key={`${x}-${y}`} cx={x} cy={y} r="7" fill="rgba(255,255,255,0.05)" stroke="#1e293b" />
+            ))
+          )}
+        </g>
+        <g>
+          <rect className="morabaraba-blue-piece" x="18" y="18" width="24" height="24" rx="4" />
+          <rect className="morabaraba-blue-piece morabaraba-blue-piece-b" x="78" y="78" width="24" height="24" rx="4" />
+          <rect className="morabaraba-blue-piece morabaraba-blue-piece-c" x="138" y="138" width="24" height="24" rx="4" />
+          <polygon className="morabaraba-red-piece" points="150,15 136,42 164,42" />
+          <polygon className="morabaraba-red-piece morabaraba-red-piece-b" points="30,135 16,162 44,162" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+function MiniMorabarabaIcon() {
+  return (
+    <div className="morabaraba-icon" aria-hidden="true">
+      <span className="morabaraba-icon-line morabaraba-icon-line-h" />
+      <span className="morabaraba-icon-line morabaraba-icon-line-v" />
+      <span className="morabaraba-icon-node morabaraba-icon-node-a" />
+      <span className="morabaraba-icon-node morabaraba-icon-node-b" />
+      <span className="morabaraba-icon-node morabaraba-icon-node-c" />
+    </div>
+  );
+}
+
 function PlanetGeneratorIcon() {
   return (
     <div className="floating-planets-icon" aria-hidden="true">
@@ -65,6 +156,8 @@ function ProjectCard({ project }: { project: Project }) {
   const projectUrl = project.liveUrl ?? project.appStoreUrl ?? project.playStoreUrl;
   const isClickable = Boolean(project.detailUrl ?? projectUrl);
   const hasPlanetGeneratorPreview = project.icon === "space";
+  const hasQrForgePreview = project.detailUrl === "/projects/qrforge";
+  const hasMiniMorabarabaPreview = project.detailUrl === "/projects/mini-morabaraba";
   const hasPlayButton = project.detailUrl === "/projects/mini-morabaraba";
   const hasGenerateButton = project.detailUrl === "/projects/qrforge";
   const hasExploreButton = project.detailUrl === "/projects/planet-generator";
@@ -101,6 +194,8 @@ function ProjectCard({ project }: { project: Project }) {
     <div
       className={cn(
         "glass group relative h-full min-w-0 overflow-hidden rounded-2xl p-5 transition-all hover:border-accent/20 sm:p-6",
+        hasMiniMorabarabaPreview && "border-accent/20 bg-[#0a0e1a]",
+        hasQrForgePreview && "border-accent/20 bg-[#071016]",
         hasPlanetGeneratorPreview && "border-accent2/20 bg-[#080b14]",
         isClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       )}
@@ -110,6 +205,8 @@ function ProjectCard({ project }: { project: Project }) {
       tabIndex={isClickable ? 0 : undefined}
       aria-label={isClickable ? `${project.title} details` : undefined}
     >
+      {hasMiniMorabarabaPreview && <MiniMorabarabaBackdrop />}
+      {hasQrForgePreview && <QRForgeBackdrop />}
       {hasPlanetGeneratorPreview && <PlanetGeneratorBackdrop />}
 
       <div className="relative z-10 flex h-full min-w-0 flex-col gap-4">
@@ -117,6 +214,10 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-gradient-to-br from-accent/20 to-accent2/20 sm:h-12 sm:w-12">
           {hasPlanetGeneratorPreview ? (
             <PlanetGeneratorIcon />
+          ) : hasMiniMorabarabaPreview ? (
+            <MiniMorabarabaIcon />
+          ) : hasQrForgePreview ? (
+            <QRForgeIcon />
           ) : project.imageUrl ? (
             <Image
               src={project.imageUrl}
