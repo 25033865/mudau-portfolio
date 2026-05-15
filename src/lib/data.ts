@@ -13,7 +13,7 @@ export const PERSONAL_INFO = {
         to deployment, I turn ideas into intuitive digital products that make a real impact.`,
   shortBio: "App Developer · South Africa · Building apps people love.",
   yearsOfExperience: 2,
-  projectsCompleted: 3,
+  projectsCompleted: 7,
   location: "South Africa",
   availability: "Available for freelance & full-time opportunities",
   profileImage: "https://firebasestorage.googleapis.com/v0/b/mudau-1d1cb.firebasestorage.app/o/Mudau.PNG?alt=media&token=d4d82d50-4a87-4c9e-b81c-3e2c580901b1", // replace with your actual photo

@@ -152,7 +152,7 @@ export default function HeroSection() {
             <div className="mx-auto mb-10 grid w-full max-w-md grid-cols-3 items-start gap-3 sm:mb-12 sm:gap-8 lg:mx-0">
               {[
                 { value: `${PERSONAL_INFO.yearsOfExperience}+`, label: "Years Exp" },
-                { value: `${PERSONAL_INFO.projectsCompleted}+`, label: "Apps Built" },
+                { value: `${PERSONAL_INFO.projectsCompleted}+`, label: "Projects" },
                 { value: "∞", label: "Ideas" },
               ].map((stat) => (
                 <div
