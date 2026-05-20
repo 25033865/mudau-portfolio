@@ -15,8 +15,8 @@ export default function ExperienceSection() {
       <div className="relative z-10 mx-auto max-w-4xl">
         <SectionHeader
           label="Experience"
-          title="Where I've"
-          titleAccent="worked"
+          title="What I've"
+          titleAccent="Achieved"
         />
 
         {/* Timeline */}
