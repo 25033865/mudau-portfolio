@@ -14,7 +14,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── About Section ────────────────────────────────────────────────────────────
-// Edit bio in PERSONAL_INFO inside /src/lib/data.ts
 const highlights = [
   {
     icon: <Smartphone size={20} className="text-accent" />,

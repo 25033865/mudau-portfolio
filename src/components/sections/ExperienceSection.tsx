@@ -7,7 +7,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Experience Section ───────────────────────────────────────────────────────
-// Edit experiences in EXPERIENCES inside /src/lib/data.ts
 export default function ExperienceSection() {
   return (
     <section id="experience" className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">

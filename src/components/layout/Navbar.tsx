@@ -6,13 +6,11 @@ import { NAV_ITEMS, PERSONAL_INFO } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
-// Sticky top nav. Becomes solid on scroll, collapses to hamburger on mobile.
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  // Track scroll for background + active section highlighting
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);

@@ -3,14 +3,11 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 // ─── Section Header ───────────────────────────────────────────────────────────
-// Reusable heading block used at the top of every section.
-// Usage: <SectionHeader label="About Me" title="My" titleAccent="story" />
-
 interface SectionHeaderProps {
-  label: string;       // Small uppercase label above the title
-  title: string;       // First part of the main heading
-  titleAccent: string; // Gradient-coloured part of the heading
-  centered?: boolean;  // Center alignment (default: center)
+  label: string;
+  title: string;
+  titleAccent: string;
+  centered?: boolean;
 }
 
 export default function SectionHeader({

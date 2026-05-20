@@ -15,8 +15,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Skills Section ───────────────────────────────────────────────────────────
-// Edit skills in SKILLS inside /src/lib/data.ts — add, remove or rename them.
-
 const ALL_SKILLS_FLAT = [
   ...SKILLS.mobile,
   ...SKILLS.frontend,

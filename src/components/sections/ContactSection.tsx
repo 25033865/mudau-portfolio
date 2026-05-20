@@ -7,9 +7,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // ─── Contact Section ──────────────────────────────────────────────────────────
-// Edit contact details in CONTACT_INFO inside /src/lib/data.ts
-// The form below is a mailto form — wire it to a backend (Resend, EmailJS, etc.) if needed.
-
 const iconMap: Record<string, React.ReactNode> = {
   github: <Github size={18} />,
   linkedin: <Linkedin size={18} />,
@@ -26,7 +23,6 @@ export default function ContactSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Replace this with your preferred email handler (EmailJS, Resend, Formspree, etc.).
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const subject = encodeURIComponent(`Portfolio Inquiry from ${form.name}`);

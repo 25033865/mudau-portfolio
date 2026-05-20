@@ -6,7 +6,6 @@ import { ArrowDown, MapPin, Smartphone } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/data";
 
 // ─── Hero Section ─────────────────────────────────────────────────────────────
-// The first thing visitors see. Edit PERSONAL_INFO in /src/lib/data.ts
 const HERO_ROLES = ["App Developer", "Next.Js Developer", "React Native Developer"];
 const MAX_ROLE_LENGTH = Math.max(...HERO_ROLES.map((role) => role.length));
 const HERO_BIOS = [
@@ -27,7 +26,6 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
-  // Typewriter effect for rotating roles
   useEffect(() => {
     const current = HERO_ROLES[roleIndex];
 

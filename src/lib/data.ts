@@ -1,7 +1,6 @@
 import type { Project, Experience, ContactInfo, NavItem } from "@/types";
 
 // ─── Personal Info ────────────────────────────────────────────────────────────
-// Edit your personal details here.
 export const PERSONAL_INFO = {
   name: "Mudau Rotondwa Agriment",
   firstName: "Rotondwa",
@@ -17,7 +16,7 @@ export const PERSONAL_INFO = {
   location: "South Africa",
   availability: "Available for freelance & full-time opportunities",
   profileImage: "https://firebasestorage.googleapis.com/v0/b/mudau-1d1cb.firebasestorage.app/o/Mudau.PNG?alt=media&token=d4d82d50-4a87-4c9e-b81c-3e2c580901b1", // replace with your actual photo
-  resumeUrl: "/resume.pdf",            // place your CV in /public/resume.pdf
+  resumeUrl: "/resume.pdf",
 };
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
@@ -30,7 +29,6 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 // ─── Skills ───────────────────────────────────────────────────────────────────
-// Add / remove skills as needed.
 export const SKILLS = {
   mobile: [
     { name: "Flutter", icon: "flutter" },
@@ -63,7 +61,6 @@ export const SKILLS = {
 };
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
-// Replace these with your real projects.
 export const PROJECTS: Project[] = [
   {
     id: "proj-01",
@@ -88,7 +85,7 @@ export const PROJECTS: Project[] = [
     platform: "web",
     platformLabel: "Web Tool",
     status: "live",
-    year: 2026,
+    year: 2025,
     featured: true,
   },
   {
@@ -112,7 +109,7 @@ export const PROJECTS: Project[] = [
     tags: ["Flutter", "OpenAI API", "Firebase", "Dart"],
     platform: "cross-platform",
     status: "in-progress",
-    year: 2025,
+    year: 2026,
     featured: true,
   },
   {
@@ -136,7 +133,7 @@ export const PROJECTS: Project[] = [
     tags: ["Flutter", "Google Maps API", "Firebase"],
     platform: "android",
     status: "in-progress",
-    year: 2023,
+    year: 2026,
     featured: false,
   },
   {
@@ -159,7 +156,7 @@ export const PROJECTS: Project[] = [
     platformLabel: "Website",
     icon: "portfolio",
     status: "live",
-    year: 2026,
+    year: 2025,
     liveUrl: "https://mudau.me/",
     section: "projects",
     featured: true,
@@ -167,7 +164,6 @@ export const PROJECTS: Project[] = [
 ];
 
 // ─── Experience ───────────────────────────────────────────────────────────────
-// Replace with your real work history.
 export const EXPERIENCES: Experience[] = [
   {
     id: "exp-01",
@@ -199,28 +195,27 @@ export const EXPERIENCES: Experience[] = [
 ];
 
 // ─── Contact ──────────────────────────────────────────────────────────────────
-// Update with your real contact info.
 export const CONTACT_INFO: ContactInfo = {
-  email: "mudaurotondwaagriment2007@gmail.com", // replace with your email
+  email: "mudaurotondwaagriment2007@gmail.com",
   phone: "+27 64 624 3837",
   location: "South Africa (Remote-Friendly)",
   availability: "Open to freelance projects & full-time roles",
   socials: [
     {
       platform: "GitHub",
-      url: "https://github.com/25033865", // replace
+      url: "https://github.com/25033865",
       handle: "@25033865",
       icon: "github",
     },
     {
       platform: "LinkedIn",
-      url: "https://www.linkedin.com/in/mudau-rotondwa-agriment-924987383", // replace
+      url: "https://www.linkedin.com/in/mudau-rotondwa-agriment-924987383",
       handle: "Rotondwa Mudau",
       icon: "linkedin",
     },
     {
       platform: "WhatsApp",
-      url: "https://wa.me/27646243837", // replace
+      url: "https://wa.me/27646243837",
       handle: "+27 64 624 3837",
       icon: "whatsapp",
     },

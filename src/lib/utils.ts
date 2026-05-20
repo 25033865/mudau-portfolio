@@ -2,7 +2,6 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 // ─── Class Name Utility ───────────────────────────────────────────────────────
-// Merges Tailwind classes safely — use like: cn("px-4", isActive && "bg-accent")
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

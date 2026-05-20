@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { type ButtonHTMLAttributes } from "react";
 
 // ─── Button ───────────────────────────────────────────────────────────────────
-// Consistent button component used across the portfolio.
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";

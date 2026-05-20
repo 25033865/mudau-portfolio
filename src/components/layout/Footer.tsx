@@ -3,7 +3,7 @@ import { Github, Linkedin, MessageCircle } from "lucide-react";
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 export default function Footer() {
-  const year = new Date().getFullYear();
+  const year = 2025;
 
   const iconMap: Record<string, React.ReactNode> = {
     github: <Github size={16} />,

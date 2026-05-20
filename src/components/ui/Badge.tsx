@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 
 // ─── Badge ────────────────────────────────────────────────────────────────────
-// Small pill badge for tags, status indicators, etc.
 interface BadgeProps {
   children: React.ReactNode;
   variant?: "default" | "accent" | "muted";

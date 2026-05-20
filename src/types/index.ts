@@ -40,7 +40,7 @@ export interface Experience {
   company: string;
   companyUrl?: string;
   startDate: string;
-  endDate?: string; // undefined means "Present"
+  endDate?: string;
   description: string;
   highlights: string[];
   technologies: string[];
