@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode, Monitor, Sparkles, Play, Wand2, Telescope } from "lucide-react";
+import { ExternalLink, Github, Smartphone, Joystick, Apple, QrCode, Monitor, Sparkles, Play, Wand2, Telescope, BookOpen } from "lucide-react";
 import { cn, getPlatformLabel, getStatusColor } from "@/lib/utils";
 import type { Project } from "@/types";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -69,6 +69,41 @@ function QRForgeIcon() {
   return (
     <div className="qrforge-icon" aria-hidden="true">
       <QrCode size={25} strokeWidth={2.4} />
+    </div>
+  );
+}
+
+function StudyBuddyBackdrop() {
+  return (
+    <div className="studybuddy-card-bg" aria-hidden="true">
+      <span className="studybuddy-scanline" />
+      <span className="studybuddy-flashcard studybuddy-flashcard-a">
+        <span className="studybuddy-flashcard-dot" />
+        <span className="studybuddy-flashcard-line studybuddy-flashcard-line-a" />
+        <span className="studybuddy-flashcard-line studybuddy-flashcard-line-b" />
+      </span>
+      <span className="studybuddy-flashcard studybuddy-flashcard-b" />
+      <span className="studybuddy-notebook">
+        <span className="studybuddy-notebook-spine" />
+        <span className="studybuddy-notebook-ring studybuddy-notebook-ring-a" />
+        <span className="studybuddy-notebook-ring studybuddy-notebook-ring-b" />
+        <span className="studybuddy-note-check studybuddy-note-check-a" />
+        <span className="studybuddy-note-check studybuddy-note-check-b" />
+        <span className="studybuddy-note-line studybuddy-note-line-a" />
+        <span className="studybuddy-note-line studybuddy-note-line-b" />
+        <span className="studybuddy-note-line studybuddy-note-line-c" />
+      </span>
+      <span className="studybuddy-quiz-dot studybuddy-quiz-dot-a" />
+      <span className="studybuddy-quiz-dot studybuddy-quiz-dot-b" />
+      <span className="studybuddy-quiz-dot studybuddy-quiz-dot-c" />
+    </div>
+  );
+}
+
+function StudyBuddyIcon() {
+  return (
+    <div className="studybuddy-icon" aria-hidden="true">
+      <BookOpen size={24} strokeWidth={2.4} />
     </div>
   );
 }
@@ -157,9 +192,11 @@ function ProjectCard({ project }: { project: Project }) {
   const isClickable = Boolean(project.detailUrl ?? projectUrl);
   const hasPlanetGeneratorPreview = project.icon === "space";
   const hasQrForgePreview = project.detailUrl === "/projects/qrforge";
+  const hasStudyBuddyPreview = project.detailUrl === "/projects/studybuddy";
   const hasMiniMorabarabaPreview = project.detailUrl === "/projects/mini-morabaraba";
   const hasPlayButton = project.detailUrl === "/projects/mini-morabaraba";
   const hasGenerateButton = project.detailUrl === "/projects/qrforge";
+  const hasStudyButton = project.detailUrl === "/projects/studybuddy";
   const hasExploreButton = project.detailUrl === "/projects/planet-generator";
 
   const handleCardClick = () => {
@@ -196,6 +233,7 @@ function ProjectCard({ project }: { project: Project }) {
         "glass project-card-shell group relative h-full min-w-0 overflow-hidden rounded-2xl p-5 transition-all hover:border-accent/20 sm:p-6",
         hasMiniMorabarabaPreview && "border-accent/20 bg-[#0a0e1a]",
         hasQrForgePreview && "border-accent/20 bg-[#071016]",
+        hasStudyBuddyPreview && "border-accent/20 bg-[#071017]",
         hasPlanetGeneratorPreview && "border-accent2/20 bg-[#080b14]",
         isClickable && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
       )}
@@ -207,6 +245,7 @@ function ProjectCard({ project }: { project: Project }) {
     >
       {hasMiniMorabarabaPreview && <MiniMorabarabaBackdrop />}
       {hasQrForgePreview && <QRForgeBackdrop />}
+      {hasStudyBuddyPreview && <StudyBuddyBackdrop />}
       {hasPlanetGeneratorPreview && <PlanetGeneratorBackdrop />}
 
       <div className="relative z-10 flex h-full min-w-0 flex-col gap-4">
@@ -218,6 +257,8 @@ function ProjectCard({ project }: { project: Project }) {
             <MiniMorabarabaIcon />
           ) : hasQrForgePreview ? (
             <QRForgeIcon />
+          ) : hasStudyBuddyPreview ? (
+            <StudyBuddyIcon />
           ) : project.imageUrl ? (
             <Image
               src={project.imageUrl}
@@ -284,21 +325,23 @@ function ProjectCard({ project }: { project: Project }) {
         {project.description}
       </p>
 
-      {(hasPlayButton || hasGenerateButton || hasExploreButton) && (
+      {(hasPlayButton || hasGenerateButton || hasStudyButton || hasExploreButton) && (
         <button
           type="button"
           onClick={handlePlayButtonClick}
           className="inline-flex w-fit items-center gap-2 rounded-lg border border-accent/35 bg-accent/10 px-4 py-2 font-body text-sm font-semibold text-accent transition hover:border-accent hover:bg-accent hover:text-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60"
-          aria-label={`${hasPlayButton ? "Play" : hasExploreButton ? "Explore" : "Generate with"} ${project.title}`}
+          aria-label={`${hasPlayButton ? "Play" : hasExploreButton ? "Explore" : hasStudyButton ? "Plan with" : "Generate with"} ${project.title}`}
         >
           {hasPlayButton ? (
             <Play size={15} fill="currentColor" />
           ) : hasExploreButton ? (
             <Telescope size={15} />
+          ) : hasStudyButton ? (
+            <BookOpen size={15} />
           ) : (
             <Wand2 size={15} />
           )}
-          {hasPlayButton ? "Play" : hasExploreButton ? "Explore" : "Generate"}
+          {hasPlayButton ? "Play" : hasExploreButton ? "Explore" : hasStudyButton ? "Plan" : "Generate"}
         </button>
       )}
 

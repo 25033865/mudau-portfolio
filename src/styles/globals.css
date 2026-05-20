@@ -608,6 +608,306 @@ html.intro-complete .page-shell-enter {
   }
 }
 
+/* StudyBuddy project preview */
+.studybuddy-card-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(0, 229, 255, 0.13), transparent 23%),
+    radial-gradient(circle at 86% 22%, rgba(255, 207, 112, 0.08), transparent 18%),
+    linear-gradient(135deg, rgba(0, 229, 255, 0.055), rgba(5, 10, 18, 0.72));
+}
+
+.studybuddy-card-bg::before {
+  content: "";
+  position: absolute;
+  inset: -26px;
+  opacity: 0.26;
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.13) 1px, transparent 1px),
+    linear-gradient(transparent 31px, rgba(255, 207, 112, 0.14) 32px, transparent 33px);
+  background-size:
+    36px 36px,
+    36px 36px,
+    100% 36px;
+  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.72), transparent 66%);
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.72), transparent 66%);
+}
+
+.studybuddy-card-bg::after {
+  content: "";
+  position: absolute;
+  bottom: 70px;
+  left: 30px;
+  height: 1px;
+  width: calc(100% - 60px);
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.36), transparent);
+  opacity: 0.64;
+}
+
+.studybuddy-icon {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background:
+    radial-gradient(circle at 72% 24%, rgba(255, 207, 112, 0.14), transparent 44%),
+    linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(123, 97, 255, 0.17)),
+    #0a1320;
+  box-shadow: inset 0 0 18px rgba(0, 229, 255, 0.08);
+}
+
+.studybuddy-notebook {
+  position: absolute;
+  right: -16px;
+  bottom: -32px;
+  height: 154px;
+  width: 148px;
+  border: 1px solid rgba(0, 229, 255, 0.32);
+  border-radius: 18px;
+  background:
+    linear-gradient(90deg, rgba(200, 223, 236, 0.88) 0 20px, rgba(236, 244, 248, 0.96) 20px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(212, 225, 235, 0.9));
+  box-shadow:
+    0 0 34px rgba(0, 229, 255, 0.14),
+    0 18px 34px rgba(0, 0, 0, 0.3);
+  opacity: 0.78;
+  transform: rotate(-5deg);
+  animation: studyBuddyFloat 10s ease-in-out infinite alternate;
+}
+
+.studybuddy-notebook-spine {
+  position: absolute;
+  bottom: 14px;
+  left: 26px;
+  top: 14px;
+  width: 1px;
+  background: rgba(8, 11, 15, 0.18);
+}
+
+.studybuddy-notebook-ring {
+  position: absolute;
+  left: 12px;
+  height: 10px;
+  width: 22px;
+  border: 2px solid rgba(0, 229, 255, 0.48);
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.18);
+}
+
+.studybuddy-notebook-ring-a {
+  top: 28px;
+}
+
+.studybuddy-notebook-ring-b {
+  top: 62px;
+}
+
+.studybuddy-note-check {
+  position: absolute;
+  left: 42px;
+  height: 16px;
+  width: 16px;
+  border: 2px solid rgba(0, 188, 212, 0.58);
+  border-radius: 5px;
+  background: rgba(0, 229, 255, 0.08);
+}
+
+.studybuddy-note-check::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  height: 8px;
+  width: 5px;
+  border-bottom: 2px solid #00bcd4;
+  border-right: 2px solid #00bcd4;
+  transform: rotate(42deg);
+}
+
+.studybuddy-note-check-a {
+  top: 34px;
+}
+
+.studybuddy-note-check-b {
+  top: 68px;
+}
+
+.studybuddy-note-line {
+  position: absolute;
+  left: 66px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(8, 11, 15, 0.28);
+}
+
+.studybuddy-note-line-a {
+  right: 20px;
+  top: 38px;
+}
+
+.studybuddy-note-line-b {
+  right: 34px;
+  top: 72px;
+}
+
+.studybuddy-note-line-c {
+  left: 42px;
+  right: 22px;
+  top: 106px;
+  background: rgba(255, 207, 112, 0.5);
+}
+
+.studybuddy-flashcard {
+  position: absolute;
+  display: block;
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  border-radius: 14px;
+  background: rgba(9, 18, 27, 0.74);
+  box-shadow:
+    inset 0 0 18px rgba(0, 229, 255, 0.08),
+    0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.studybuddy-flashcard-a {
+  right: 42px;
+  top: 36px;
+  height: 58px;
+  width: 126px;
+  opacity: 0.58;
+  animation: studyBuddyGlow 4.8s ease-in-out infinite;
+}
+
+.studybuddy-flashcard-b {
+  right: 84px;
+  top: 88px;
+  height: 26px;
+  width: 72px;
+  border-color: rgba(255, 207, 112, 0.24);
+  background: rgba(255, 207, 112, 0.08);
+  opacity: 0.5;
+}
+
+.studybuddy-flashcard-dot {
+  position: absolute;
+  left: 14px;
+  top: 17px;
+  height: 14px;
+  width: 14px;
+  border-radius: 5px;
+  background: rgba(0, 229, 255, 0.72);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.42);
+}
+
+.studybuddy-flashcard-line {
+  position: absolute;
+  left: 38px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(226, 232, 240, 0.18);
+}
+
+.studybuddy-flashcard-line-a {
+  right: 18px;
+  top: 17px;
+}
+
+.studybuddy-flashcard-line-b {
+  right: 42px;
+  top: 34px;
+}
+
+.studybuddy-quiz-dot {
+  position: absolute;
+  bottom: 36px;
+  height: 18px;
+  width: 18px;
+  border: 1px solid rgba(0, 229, 255, 0.24);
+  border-radius: 6px;
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: inset 0 0 12px rgba(0, 229, 255, 0.08);
+  opacity: 0.58;
+  animation: studyBuddyGlow 4.6s ease-in-out infinite;
+}
+
+.studybuddy-quiz-dot-a {
+  right: 168px;
+}
+
+.studybuddy-quiz-dot-b {
+  right: 196px;
+  bottom: 62px;
+  border-color: rgba(123, 97, 255, 0.3);
+  background: rgba(123, 97, 255, 0.14);
+  animation-delay: 1.1s;
+}
+
+.studybuddy-quiz-dot-c {
+  right: 138px;
+  bottom: 70px;
+  border-color: rgba(255, 207, 112, 0.3);
+  background: rgba(255, 207, 112, 0.12);
+  animation-delay: 2s;
+}
+
+.studybuddy-scanline {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 31%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.78), rgba(255, 207, 112, 0.36), transparent);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.4);
+  opacity: 0.35;
+  animation: studyBuddyScan 6.4s ease-in-out infinite;
+}
+
+.group:hover .studybuddy-notebook {
+  opacity: 0.9;
+  transform: rotate(-2deg) translate3d(-5px, -5px, 0);
+}
+
+@keyframes studyBuddyFloat {
+  from {
+    transform: rotate(-5deg) translate3d(0, 0, 0);
+  }
+  to {
+    transform: rotate(-2deg) translate3d(-8px, -10px, 0);
+  }
+}
+
+@keyframes studyBuddyScan {
+  0%,
+  100% {
+    transform: translate3d(0, -18px, 0);
+    opacity: 0.12;
+  }
+  45%,
+  55% {
+    opacity: 0.48;
+  }
+  50% {
+    transform: translate3d(0, 86px, 0);
+  }
+}
+
+@keyframes studyBuddyGlow {
+  0%,
+  100% {
+    opacity: 0.34;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+}
+
 /* QRForge project preview */
 .qrforge-card-bg {
   position: absolute;
@@ -975,6 +1275,10 @@ html.intro-complete .page-shell-enter {
   .project-card-shell,
   .morabaraba-card-board,
   .morabaraba-win-line,
+  .studybuddy-notebook,
+  .studybuddy-scanline,
+  .studybuddy-flashcard-a,
+  .studybuddy-quiz-dot,
   .qrforge-preview-panel,
   .qrforge-scanline,
   .qrforge-chip,
