@@ -193,6 +193,20 @@ export const EXPERIENCES: Experience[] = [
     ],
     technologies: ["Embedded Systems", "PWM", "H-Bridge", "ADC", "State Machines"],
   },
+  {
+    id: "exp-03",
+    role: "Robotics Design",
+    company: "Prototype Build",
+    startDate: "2024",
+    endDate: "2024",
+    description: "Designed a robot concept from app-based modeling through 3D-printed prototype preparation.",
+    highlights: [
+      "Created the robot design in a mobile design app and refined the model for build readiness",
+      "Prepared the model for fabrication in Creality for 3D printing",
+      "Produced a printable prototype to validate fit and form",
+    ],
+    technologies: ["3D Modeling", "Creality", "3D Printing", "Prototyping"],
+  },
 ];
 
 // ─── Contact ──────────────────────────────────────────────────────────────────
