@@ -15,7 +15,7 @@ export const PERSONAL_INFO = {
   projectsCompleted: 7,
   location: "South Africa",
   availability: "Available for freelance & full-time opportunities",
-  profileImage: "https://firebasestorage.googleapis.com/v0/b/roomradarapp-50fb1.firebasestorage.app/o/Mudau.PNG?alt=media&token=359582f5-7f93-44c6-8d3f-c337f67b1afb",
+  profileImage: "https://firebasestorage.googleapis.com/v0/b/mudau-1d1cb.firebasestorage.app/o/Mudau.PNG?alt=media&token=d4d82d50-4a87-4c9e-b81c-3e2c580901b1",
   resumeUrl: "/resume.pdf",
 };
 
