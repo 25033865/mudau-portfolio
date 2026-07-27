@@ -12,6 +12,7 @@ const HERO_BIOS = [
   "I'm a Mobile App Developer crafting high-performance. Specializing in React Native and cross-platform development, I turn concepts into polished, scalable mobile experiences that users love.",
   "My journey in app development started in high school where curiosity sparked a passion for building. Today, with 2+ years of professional experience, I craft high-performance mobile applications.",
 ];
+const BIO_ROTATION_MS = 6000;
 
 export default function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -22,7 +23,7 @@ export default function HeroSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setBioIndex((prev) => (prev + 1) % HERO_BIOS.length);
-    }, 16000);
+    }, BIO_ROTATION_MS);
     return () => clearInterval(interval);
   }, []);
 
@@ -142,6 +143,7 @@ export default function HeroSection() {
             <p
               key={bioIndex}
               className="mx-auto mb-9 max-w-2xl animate-fade-in-up font-body text-sm leading-relaxed text-muted sm:mb-10 sm:text-lg lg:mx-0"
+              style={{ animationDuration: "0.45s" }}
             >
               {HERO_BIOS[bioIndex]}
             </p>

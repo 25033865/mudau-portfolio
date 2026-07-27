@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { NAV_ITEMS, PERSONAL_INFO } from "@/lib/data";
+import { NAV_ITEMS } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 export default function Navbar() {
@@ -89,13 +90,16 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* CTA Button */}
-        <button
-          onClick={() => handleNavClick("#contact")}
-          className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium font-body border border-accent/40 text-accent rounded-lg hover:bg-accent/10 transition-all"
-        >
-          Let&apos;s Talk
-        </button>
+        <div className="hidden items-center gap-3 md:flex">
+          {/* CTA Button */}
+          <button
+            onClick={() => handleNavClick("#contact")}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium font-body border border-accent/40 text-accent rounded-lg hover:bg-accent/10 transition-all"
+          >
+            Let&apos;s Talk
+          </button>
+          <ThemeToggle />
+        </div>
 
         {/* Mobile Menu Toggle */}
         <button
@@ -120,6 +124,7 @@ export default function Navbar() {
               {item.label}
             </button>
           ))}
+          <ThemeToggle showLabel />
           <button
             onClick={() => handleNavClick("#contact")}
             className="mt-2 w-full text-center px-4 py-3 text-sm font-medium font-body border border-accent/40 text-accent rounded-lg hover:bg-accent/10 transition-all"

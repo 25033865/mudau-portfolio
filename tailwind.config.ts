@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const themeColor = (name: string) => `rgb(var(--${name}-rgb) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,13 +16,13 @@ const config: Config = {
         mono: ["'JetBrains Mono'", "monospace"],
       },
       colors: {
-        bg: "#080B0F",
-        surface: "#0D1117",
-        border: "#1C2333",
-        accent: "#00E5FF",
-        accent2: "#7B61FF",
-        muted: "#8B9AB0",
-        text: "#E8EDF5",
+        bg: themeColor("bg"),
+        surface: themeColor("surface"),
+        border: themeColor("border"),
+        accent: themeColor("accent"),
+        accent2: themeColor("accent2"),
+        muted: themeColor("muted"),
+        text: themeColor("text"),
       },
       animation: {
         "float": "float 6s ease-in-out infinite",

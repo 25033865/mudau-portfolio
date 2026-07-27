@@ -194,6 +194,8 @@ function ProjectCard({ project }: { project: Project }) {
   const hasQrForgePreview = project.detailUrl === "/projects/qrforge";
   const hasStudyBuddyPreview = project.detailUrl === "/projects/studybuddy";
   const hasMiniMorabarabaPreview = project.detailUrl === "/projects/mini-morabaraba";
+  const hasPreviewArtwork =
+    hasPlanetGeneratorPreview || hasQrForgePreview || hasStudyBuddyPreview || hasMiniMorabarabaPreview;
   const hasPlayButton = project.detailUrl === "/projects/mini-morabaraba";
   const hasGenerateButton = project.detailUrl === "/projects/qrforge";
   const hasStudyButton = project.detailUrl === "/projects/studybuddy";
@@ -231,6 +233,7 @@ function ProjectCard({ project }: { project: Project }) {
     <div
       className={cn(
         "glass project-card-shell group relative h-full min-w-0 overflow-hidden rounded-2xl p-5 transition-all hover:border-accent/20 sm:p-6",
+        hasPreviewArtwork && "project-preview-card",
         hasMiniMorabarabaPreview && "border-accent/20 bg-[#0a0e1a]",
         hasQrForgePreview && "border-accent/20 bg-[#071016]",
         hasStudyBuddyPreview && "border-accent/20 bg-[#071017]",

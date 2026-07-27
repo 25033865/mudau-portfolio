@@ -5,6 +5,22 @@ import CustomCursor from "@/components/ui/CustomCursor";
 import PageIntro from "@/components/ui/PageIntro";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 
+const themeInitScript = `
+(() => {
+  try {
+    const storageKey = "mudau-theme";
+    const stored = window.localStorage.getItem(storageKey);
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    const theme = stored === "light" || stored === "dark" ? stored : prefersLight ? "light" : "dark";
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "dark";
+    document.documentElement.style.colorScheme = "dark";
+  }
+})();
+`;
+
 // ─── Page Metadata ────────────────────────────────────────────────────────────
 // Edit the metadata to match your personal info and SEO keywords.
 export const metadata: Metadata = {
@@ -35,7 +51,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="noise grid-bg">
         <PageIntro />
         <ScrollProgress />
