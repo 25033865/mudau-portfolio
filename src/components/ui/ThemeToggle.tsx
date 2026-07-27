@@ -16,7 +16,7 @@ function getPreferredTheme(): ThemeMode {
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (isThemeMode(stored)) return stored;
 
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  return "dark";
 }
 
 function applyTheme(theme: ThemeMode) {

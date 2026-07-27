@@ -10,8 +10,7 @@ const themeInitScript = `
   try {
     const storageKey = "mudau-theme";
     const stored = window.localStorage.getItem(storageKey);
-    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-    const theme = stored === "light" || stored === "dark" ? stored : prefersLight ? "light" : "dark";
+    const theme = stored === "light" || stored === "dark" ? stored : "dark";
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
   } catch {

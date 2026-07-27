@@ -98,18 +98,20 @@ export default function Navbar() {
           >
             Let&apos;s Talk
           </button>
-          <ThemeToggle />
+          <ThemeToggle className="h-10 w-10 border-accent/40 bg-transparent hover:border-accent/60 hover:bg-accent/10 hover:text-accent" />
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-muted hover:text-text md:hidden transition-colors"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle className="h-9 w-9 border-0 bg-transparent text-muted hover:bg-transparent hover:text-text" />
+          <button
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-muted hover:text-text transition-colors"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Drawer */}
@@ -124,7 +126,6 @@ export default function Navbar() {
               {item.label}
             </button>
           ))}
-          <ThemeToggle showLabel />
           <button
             onClick={() => handleNavClick("#contact")}
             className="mt-2 w-full text-center px-4 py-3 text-sm font-medium font-body border border-accent/40 text-accent rounded-lg hover:bg-accent/10 transition-all"
